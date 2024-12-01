@@ -1,33 +1,14 @@
-// Mostrar/ocultar conteúdo ao clicar nos botões
-document.getElementById('cardapioButton').addEventListener('click', () => {
-    const content = document.getElementById('cardapioContent');
-    content.style.display = content.style.display === 'block' ? 'none' : 'block';
-});
-
-document.getElementById('metabolismButton').addEventListener('click', () => {
-    const content = document.getElementById('metabolismContent');
-    content.style.display = content.style.display === 'block' ? 'none' : 'block';
-});
-
-// Função para mostrar o dia selecionado
-const cardapios = {};
-function showDay(day) {
-    document.getElementById('cardapioDia').value = cardapios[day] || '';
-    document.getElementById('cardapioDia').dataset.currentDay = day;
-}
-
-// Salvar cardápio do dia selecionado
-document.getElementById('cardapioDia').addEventListener('input', function () {
-    const day = this.dataset.currentDay;
-    cardapios[day] = this.value;
-});
-
-// Botão Salvar - Gerar página do paciente
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value;
-    const metabolismData = document.getElementById('metabolismData').value;
+    const dataAtual = new Date().toLocaleDateString(); // Capturar a data atual
+    const cardapiosFormatados = Object.entries(cardapios).map(([dia, conteudo]) => `
+        <div class="content-section">
+            <h4>${dia.charAt(0).toUpperCase() + dia.slice(1)}</h4>
+            <pre>${conteudo || "Nenhum cardápio inserido."}</pre>
+        </div>
+    `).join('');
 
-    // Gerar conteúdo HTML para o paciente
+    // Gerar HTML para o paciente com nome, data e layout dinâmico
     const patientPage = `
     <!DOCTYPE html>
     <html lang="en">
@@ -36,29 +17,95 @@ document.getElementById('saveButton').addEventListener('click', () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>${nomePaciente} - Dados</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            :root {
+                --primary: #002f6c;
+                --secondary: #ffc107;
+                --background: #f8f9fa;
+            }
+            body {
+                font-family: 'Roboto', sans-serif;
+                background-color: var(--background);
+                padding: 1rem;
+            }
+            .header {
+                background: linear-gradient(135deg, var(--primary), var(--secondary));
+                color: white;
+                text-align: center;
+                padding: 1rem;
+                margin-bottom: 2rem;
+            }
+            .content-section {
+                background: white;
+                padding: 1rem;
+                margin-bottom: 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            h3, h4 {
+                margin-bottom: 1rem;
+            }
+            pre {
+                background: #f8f9fa;
+                padding: 1rem;
+                border-radius: 8px;
+            }
+            .nav-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+            .nav-buttons button {
+                background: var(--primary);
+                color: white;
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                transition: background 0.3s;
+            }
+            .nav-buttons button:hover {
+                background: var(--secondary);
+                color: var(--primary);
+            }
+            .hidden {
+                display: none;
+            }
+        </style>
     </head>
     <body>
-        <header class="header" style="background: linear-gradient(135deg, #002f6c, #ffc107); color: white; text-align: center; padding: 1rem;">
+        <header class="header">
             <img src="logo.png" alt="MK Logo" style="height: 50px; margin-bottom: 10px;">
             <h1>${nomePaciente}</h1>
+            <p><strong>Data:</strong> ${dataAtual}</p>
         </header>
 
         <div class="container">
-            <!-- Cardápio -->
-            <div class="content-section">
-                <h3>Cardápio</h3>
-                ${Object.entries(cardapios).map(([day, content]) => `
-                    <h4>${day.charAt(0).toUpperCase() + day.slice(1)}:</h4>
-                    <p>${content || "Nenhuma informação inserida."}</p>
-                `).join('')}
+            <div class="nav-buttons">
+                <button onclick="showSection('cardapio')">Cardápio</button>
+                <button onclick="showSection('dados')">Dados Metabólicos</button>
             </div>
 
-            <!-- Informações Metabólicas -->
-            <div class="content-section">
+            <div id="cardapio" class="content-section">
+                <h3>Cardápio</h3>
+                ${cardapiosFormatados}
+            </div>
+
+            <div id="dados" class="content-section hidden">
                 <h3>Informações Metabólicas</h3>
-                <p>${metabolismData || "Nenhuma informação de metabolismo foi inserida."}</p>
+                <p>${document.getElementById('metabolismData').value || "Nenhuma informação inserida."}</p>
             </div>
         </div>
+
+        <script>
+            // Função para alternar entre seções
+            function showSection(sectionId) {
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                document.getElementById(sectionId).classList.remove('hidden');
+            }
+        </script>
     </body>
     </html>
     `;
