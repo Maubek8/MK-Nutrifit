@@ -1,3 +1,22 @@
+// Alternar visibilidade das seções
+document.querySelectorAll('.toggle-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const targetId = button.dataset.target;
+        const targetSection = document.getElementById(targetId);
+
+        // Esconder todas as outras seções
+        document.querySelectorAll('.section').forEach(section => {
+            if (section !== targetSection) {
+                section.style.display = 'none';
+            }
+        });
+
+        // Alternar a visibilidade da seção clicada
+        targetSection.style.display = targetSection.style.display === 'block' ? 'none' : 'block';
+    });
+});
+
+// Salvar página do paciente
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value.trim() || 'Paciente';
     const dataPaciente = document.getElementById('dataPaciente').value || new Date().toLocaleDateString();
@@ -12,44 +31,13 @@ document.getElementById('saveButton').addEventListener('click', () => {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${nomePaciente} - Página do Paciente</title>
+            <title>${nomePaciente} - Dados do Paciente</title>
             <style>
-                :root {
-                    --primary: #002f6c;
-                    --secondary: #ffc107;
-                    --background: #f8f9fa;
-                    --button-gray: #d6d6d6;
-                }
-                body {
-                    font-family: 'Roboto', sans-serif;
-                    background-color: var(--background);
-                    margin: 0;
-                    padding: 0;
-                }
-                .header {
-                    background: linear-gradient(135deg, var(--primary), var(--secondary));
-                    color: white;
-                    text-align: center;
-                    padding: 1rem;
-                }
-                .container {
-                    padding: 1rem;
-                    background-color: white;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-                    margin: 1rem;
-                }
-                .section {
-                    display: none;
-                    margin-top: 1rem;
-                    padding: 1rem;
-                    border: 1px solid #ddd;
-                    background-color: white;
-                    border-radius: 8px;
-                }
-                .btn {
-                    margin-bottom: 0.5rem;
-                }
+                body { font-family: Arial, sans-serif; background: #f8f9fa; padding: 1rem; }
+                .header { background: linear-gradient(135deg, #002f6c, #ffc107); color: white; text-align: center; padding: 1rem; }
+                .container { background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 1rem; }
+                .section { display: none; margin-top: 1rem; padding: 1rem; background: #fff; border: 1px solid #ddd; border-radius: 8px; }
+                .btn { margin-bottom: 0.5rem; }
             </style>
         </head>
         <body>
@@ -58,7 +46,6 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 <h2>Data: ${dataPaciente}</h2>
             </header>
             <div class="container">
-                <!-- Botões dinâmicos -->
                 <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="cardapioSection">Refeições</button>
                 <div id="cardapioSection" class="section">
                     <h3>Cardápio</h3>
@@ -84,21 +71,14 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 </div>
             </div>
             <script>
-                // Alternar visibilidade das seções
                 document.querySelectorAll('.toggle-button').forEach(button => {
                     button.addEventListener('click', () => {
                         const targetId = button.dataset.target;
                         const targetSection = document.getElementById(targetId);
 
-                        // Esconder todas as outras seções
                         document.querySelectorAll('.section').forEach(section => {
-                            if (section !== targetSection) {
-                                section.style.display = 'none';
-                            }
+                            section.style.display = section === targetSection && section.style.display !== 'block' ? 'block' : 'none';
                         });
-
-                        // Alternar a visibilidade da seção clicada
-                        targetSection.style.display = targetSection.style.display === 'block' ? 'none' : 'block';
                     });
                 });
             </script>
@@ -106,7 +86,6 @@ document.getElementById('saveButton').addEventListener('click', () => {
         </html>
     `;
 
-    // Criar o arquivo HTML
     const blob = new Blob([html], { type: 'text/html' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
