@@ -14,34 +14,42 @@
     </header>
 
     <div class="container">
-        <!-- Nome do Paciente -->
+        <!-- Nome do Paciente e Data -->
         <div class="form-group">
             <label for="nomePaciente" class="form-label">Nome do Paciente:</label>
             <input type="text" id="nomePaciente" class="form-control" placeholder="Digite o nome do paciente">
         </div>
+        <div class="form-group">
+            <label for="dataPaciente" class="form-label">Data:</label>
+            <input type="date" id="dataPaciente" class="form-control">
+        </div>
 
         <!-- Área para inserir o texto completo -->
         <div class="form-group">
-            <label for="textoCompleto" class="form-label">Cole o texto completo do cardápio:</label>
-            <textarea id="textoCompleto" class="form-control" rows="10" placeholder="Cole aqui o texto completo com os cardápios organizados por dia da semana."></textarea>
+            <label for="textoCompleto" class="form-label">Cole o texto completo:</label>
+            <textarea id="textoCompleto" class="form-control" rows="10" placeholder="Cole aqui o texto completo com títulos, subtítulos e dados."></textarea>
         </div>
         <button class="btn btn-primary w-100 mb-3" id="processarTexto">Processar Texto</button>
 
-        <!-- Botão Cardápio -->
-        <button class="btn btn-primary w-100 mb-3" id="cardapioButton">Editar Cardápio</button>
+        <!-- Botões para inserir dados -->
+        <button class="btn btn-primary w-100 mb-3" id="cardapioButton">Cardápio</button>
         <div id="cardapioContent" class="accordion-content">
-            <!-- Botões para selecionar o dia -->
-            <div class="d-flex justify-content-around mb-3">
-                <button class="btn btn-outline-primary" onclick="showDay('segunda')">Segunda</button>
-                <button class="btn btn-outline-primary" onclick="showDay('terca')">Terça</button>
-                <button class="btn btn-outline-primary" onclick="showDay('quarta')">Quarta</button>
-                <button class="btn btn-outline-primary" onclick="showDay('quinta')">Quinta</button>
-                <button class="btn btn-outline-primary" onclick="showDay('sexta')">Sexta</button>
-                <button class="btn btn-outline-primary" onclick="showDay('sabado')">Sábado</button>
-                <button class="btn btn-outline-primary" onclick="showDay('domingo')">Domingo</button>
-            </div>
-            <!-- Área para exibir o cardápio do dia -->
-            <textarea id="cardapioDia" class="form-control" rows="10" placeholder="Cardápio do dia selecionado..."></textarea>
+            <textarea id="cardapioArea" class="form-control" rows="10" placeholder="Insira o cardápio aqui..."></textarea>
+        </div>
+
+        <button class="btn btn-primary w-100 mb-3" id="metabolismButton">Metabolismo</button>
+        <div id="metabolismContent" class="accordion-content">
+            <textarea id="metabolismArea" class="form-control" rows="5" placeholder="Cole informações metabólicas aqui..."></textarea>
+        </div>
+
+        <button class="btn btn-primary w-100 mb-3" id="exerciciosButton">Exercícios</button>
+        <div id="exerciciosContent" class="accordion-content">
+            <textarea id="exerciciosArea" class="form-control" rows="5" placeholder="Insira dados de exercícios aqui..."></textarea>
+        </div>
+
+        <button class="btn btn-primary w-100 mb-3" id="macrosButton">Macros</button>
+        <div id="macrosContent" class="accordion-content">
+            <textarea id="macrosArea" class="form-control" rows="5" placeholder="Insira dados de distribuição de macronutrientes aqui..."></textarea>
         </div>
 
         <!-- Botão Salvar -->
