@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maria Silva - Página do Paciente</title>
+    <title>MK-CARDIOSPORT - Inserir Dados</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -35,81 +35,148 @@
             margin-top: 1rem;
         }
 
-        .day-button {
-            margin-bottom: 0.5rem;
-            display: block;
-            text-align: left;
-            width: 100%;
-        }
-
-        .day-content, .metabolism-content {
-            display: none;
-            margin-top: 1rem;
-            padding: 1rem;
-            border: 1px solid var(--background);
-            background-color: white;
+        .form-group {
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1>Maria Silva</h1>
+        <h1>MK-CARDIOSPORT</h1>
+        <h2 class="h6">Nutri Fit - Inserir Dados do Paciente</h2>
     </header>
 
     <div class="container">
-        <!-- Botão Dados de Metabolismo -->
-        <button class="btn btn-primary w-100 mb-3" id="metabolismButton">Dados de Metabolismo</button>
-        <div id="metabolismContent" class="metabolism-content">
+        <!-- Nome do Paciente -->
+        <div class="form-group">
+            <label for="nomePaciente" class="form-label">Nome do Paciente:</label>
+            <input type="text" id="nomePaciente" class="form-control" placeholder="Digite o nome do paciente">
+        </div>
+
+        <!-- Botão Metabolismo -->
+        <button class="btn btn-primary w-100 mb-3" id="metabolismButton">Metabolismo</button>
+        <div id="metabolismContent" class="accordion-content">
             <textarea id="metabolismData" class="form-control" rows="5" placeholder="Cole os dados de metabolismo aqui..."></textarea>
         </div>
 
-        <!-- Botão Cardápio -->
-        <button class="btn btn-primary w-100 mb-3" id="cardapioButton">Cardápio</button>
-        <div class="accordion-content" id="cardapioContent">
-            <button class="btn btn-secondary day-button" data-day="segunda">Segunda-feira</button>
-            <button class="btn btn-secondary day-button" data-day="terca">Terça-feira</button>
-            <button class="btn btn-secondary day-button" data-day="quarta">Quarta-feira</button>
-            <button class="btn btn-secondary day-button" data-day="quinta">Quinta-feira</button>
-            <button class="btn btn-secondary day-button" data-day="sexta">Sexta-feira</button>
-            <button class="btn btn-secondary day-button" data-day="sabado">Sábado</button>
-            <button class="btn btn-secondary day-button" data-day="domingo">Domingo</button>
+        <!-- Botão Refeições -->
+        <button class="btn btn-primary w-100 mb-3" id="refeicoesButton">Refeições</button>
+        <div id="refeicoesContent" class="accordion-content">
+            <form id="refeicoesForm">
+                <div class="form-group">
+                    <label for="segunda">Segunda-feira:</label>
+                    <textarea id="segunda" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="terca">Terça-feira:</label>
+                    <textarea id="terca" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="quarta">Quarta-feira:</label>
+                    <textarea id="quarta" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="quinta">Quinta-feira:</label>
+                    <textarea id="quinta" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="sexta">Sexta-feira:</label>
+                    <textarea id="sexta" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="sabado">Sábado:</label>
+                    <textarea id="sabado" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="domingo">Domingo:</label>
+                    <textarea id="domingo" class="form-control" rows="2"></textarea>
+                </div>
+            </form>
         </div>
 
-        <!-- Refeições do Dia -->
-        <div id="dayContent" class="day-content"></div>
+        <!-- Botão Salvar -->
+        <div class="mt-4 text-center">
+            <button class="btn btn-success" id="saveButton">Salvar</button>
+        </div>
     </div>
 
     <script>
-        // Configurações do botão "Dados de Metabolismo"
+        // Mostrar/ocultar conteúdo ao clicar nos botões
         document.getElementById('metabolismButton').addEventListener('click', () => {
-            const metabolismContent = document.getElementById('metabolismContent');
-            metabolismContent.style.display = metabolismContent.style.display === 'block' ? 'none' : 'block';
+            const content = document.getElementById('metabolismContent');
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
         });
 
-        // Configurações do botão "Cardápio"
-        document.getElementById('cardapioButton').addEventListener('click', () => {
-            const cardapioContent = document.getElementById('cardapioContent');
-            cardapioContent.style.display = cardapioContent.style.display === 'block' ? 'none' : 'block';
+        document.getElementById('refeicoesButton').addEventListener('click', () => {
+            const content = document.getElementById('refeicoesContent');
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
         });
 
-        // Refeições por dia da semana
-        const refeicoes = {
-            segunda: 'Café da manhã: Frutas e iogurte natural.',
-            terca: 'Almoço: Frango grelhado e salada.',
-            quarta: 'Jantar: Sopa de legumes.',
-            quinta: 'Café da manhã: Aveia com banana.',
-            sexta: 'Almoço: Peixe grelhado e arroz integral.',
-            sabado: 'Lanche: Sanduíche natural.',
-            domingo: 'Almoço: Churrasco com salada.'
-        };
+        // Botão Salvar - Gerar página do paciente
+        document.getElementById('saveButton').addEventListener('click', () => {
+            const nomePaciente = document.getElementById('nomePaciente').value;
+            const metabolismData = document.getElementById('metabolismData').value;
 
-        document.querySelectorAll('.day-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const day = button.dataset.day;
-                const dayContent = document.getElementById('dayContent');
-                dayContent.innerHTML = `<h4>${button.textContent}</h4><p>${refeicoes[day]}</p>`;
-                dayContent.style.display = 'block';
-            });
+            const segunda = document.getElementById('segunda').value;
+            const terca = document.getElementById('terca').value;
+            const quarta = document.getElementById('quarta').value;
+            const quinta = document.getElementById('quinta').value;
+            const sexta = document.getElementById('sexta').value;
+            const sabado = document.getElementById('sabado').value;
+            const domingo = document.getElementById('domingo').value;
+
+            // Gerar HTML para a página do paciente
+            const patientPage = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>${nomePaciente} - Dados</title>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            </head>
+            <body>
+                <header class="header" style="background: linear-gradient(135deg, #002f6c, #ffc107); color: white; text-align: center; padding: 1rem;">
+                    <img src="logo.png" alt="MK Logo" style="height: 50px; margin-bottom: 10px;">
+                    <h1>${nomePaciente}</h1>
+                </header>
+
+                <div class="container mt-4">
+                    <!-- Botão Metabolismo -->
+                    <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('metabolismSection')">Metabolismo</button>
+                    <div id="metabolismSection" style="display: none;">
+                        <p>${metabolismData}</p>
+                    </div>
+
+                    <!-- Botão Refeições -->
+                    <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('refeicoesSection')">Refeições</button>
+                    <div id="refeicoesSection" style="display: none;">
+                        <p><strong>Segunda-feira:</strong> ${segunda}</p>
+                        <p><strong>Terça-feira:</strong> ${terca}</p>
+                        <p><strong>Quarta-feira:</strong> ${quarta}</p>
+                        <p><strong>Quinta-feira:</strong> ${quinta}</p>
+                        <p><strong>Sexta-feira:</strong> ${sexta}</p>
+                        <p><strong>Sábado:</strong> ${sabado}</p>
+                        <p><strong>Domingo:</strong> ${domingo}</p>
+                    </div>
+                </div>
+
+                <script>
+                    function toggleVisibility(id) {
+                        const section = document.getElementById(id);
+                        section.style.display = section.style.display === 'block' ? 'none' : 'block';
+                    }
+                </script>
+            </body>
+            </html>
+            `;
+
+            // Baixar como arquivo
+            const blob = new Blob([patientPage], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${nomePaciente.replace(/\s+/g, '-').toLowerCase()}.html`;
+            link.click();
         });
     </script>
 </body>
