@@ -1,61 +1,84 @@
-const cardapios = {
-    segunda: "",
-    terca: "",
-    quarta: "",
-    quinta: "",
-    sexta: "",
-    sabado: "",
-    domingo: "",
-};
-
-// Mostrar o cardápio do dia selecionado
-function showDay(day) {
-    document.getElementById('cardapioArea').value = cardapios[day] || '';
-    document.getElementById('cardapioArea').dataset.currentDay = day;
-}
-
-// Salvar o cardápio do dia editado
-document.getElementById('cardapioArea').addEventListener('input', function () {
-    const day = this.dataset.currentDay;
-    cardapios[day] = this.value;
-});
-
-// Alternar visibilidade das seções
-document.querySelectorAll('.toggle-button').forEach(button => {
-    button.addEventListener('click', () => {
-        const targetId = button.dataset.target;
-        const targetSection = document.getElementById(targetId);
-
-        // Esconder todas as outras seções
-        document.querySelectorAll('.section').forEach(section => {
-            if (section !== targetSection) {
-                section.style.display = 'none';
-            }
-        });
-
-        // Alternar a visibilidade da seção clicada
-        targetSection.style.display = targetSection.style.display === 'block' ? 'none' : 'block';
-    });
-});
-
-// Salvar página do paciente
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value.trim() || 'Paciente';
     const dataPaciente = document.getElementById('dataPaciente').value || new Date().toLocaleDateString();
+    const cardapio = document.getElementById('cardapioArea').value || 'Nenhuma informação adicionada.';
+    const metabolism = document.getElementById('metabolismArea').value || 'Nenhuma informação adicionada.';
+    const exercicios = document.getElementById('exerciciosArea').value || 'Nenhuma informação adicionada.';
+    const macros = document.getElementById('macrosArea').value || 'Nenhuma informação adicionada.';
+
     const html = `
         <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${nomePaciente} - Dados do Paciente</title>
-            <style>${document.querySelector('style').innerHTML}</style>
+            <title>${nomePaciente} - Dados</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            <style>
+                body {
+                    font-family: 'Roboto', sans-serif;
+                    background-color: #f8f9fa;
+                    margin: 0;
+                    padding: 0;
+                }
+                .header {
+                    background: linear-gradient(135deg, #002f6c, #ffc107);
+                    color: white;
+                    text-align: center;
+                    padding: 1rem;
+                }
+                .container {
+                    margin: 1rem;
+                    padding: 1rem;
+                    background-color: white;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                }
+                button {
+                    margin-bottom: 0.5rem;
+                }
+                .section {
+                    display: none;
+                    padding: 1rem;
+                    border: 1px solid #ddd;
+                    background-color: white;
+                    border-radius: 8px;
+                    margin-top: 1rem;
+                }
+            </style>
         </head>
         <body>
-            ${document.querySelector('.container').outerHTML}
+            <header class="header">
+                <h1>${nomePaciente}</h1>
+                <h2>Data: ${dataPaciente}</h2>
+            </header>
+            <div class="container">
+                <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('metabolismSection')">Metabolismo</button>
+                <div id="metabolismSection" class="section">
+                    <h3>Metabolismo</h3>
+                    <p>${metabolism}</p>
+                </div>
+                <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('refeicoesSection')">Refeições</button>
+                <div id="refeicoesSection" class="section">
+                    <h3>Refeições</h3>
+                    <p>${cardapio}</p>
+                </div>
+                <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('exerciciosSection')">Exercícios</button>
+                <div id="exerciciosSection" class="section">
+                    <h3>Exercícios</h3>
+                    <p>${exercicios}</p>
+                </div>
+                <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('macrosSection')">Macros</button>
+                <div id="macrosSection" class="section">
+                    <h3>Macros</h3>
+                    <p>${macros}</p>
+                </div>
+            </div>
             <script>
-                ${showDay.toString()}
-                ${document.querySelectorAll('.toggle-button').forEach}
+                function toggleVisibility(id) {
+                    const section = document.getElementById(id);
+                    section.style.display = section.style.display === 'block' ? 'none' : 'block';
+                }
             </script>
         </body>
         </html>
