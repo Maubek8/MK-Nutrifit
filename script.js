@@ -1,23 +1,51 @@
-// Processar o texto completo
+// Função para processar o texto completo e distribuir nos campos
 document.getElementById('processarTexto').addEventListener('click', () => {
     const textoCompleto = document.getElementById('textoCompleto').value;
 
-    const sections = textoCompleto.split('\n\n'); // Separar por blocos de texto
-    let output = '';
+    // Inicializar variáveis para identificar seções
+    let cardapio = '';
+    let metabolismo = '';
+    let exercicios = '';
+    let macros = '';
 
-    sections.forEach(section => {
-        if (section.startsWith("Cardápio") || section.startsWith("Metabolismo") || section.startsWith("Exercícios") || section.startsWith("Macros")) {
-            output += `<textarea class="title">${section.trim()}</textarea>\n`;
+    // Detectar seções no texto completo
+    const linhas = textoCompleto.split('\n');
+    let currentSection = '';
+
+    linhas.forEach(linha => {
+        linha = linha.trim();
+        if (linha.startsWith('Cardápio')) {
+            currentSection = 'cardapio';
+        } else if (linha.startsWith('Metabolismo')) {
+            currentSection = 'metabolismo';
+        } else if (linha.startsWith('Exercícios')) {
+            currentSection = 'exercicios';
+        } else if (linha.startsWith('Macros')) {
+            currentSection = 'macros';
         } else {
-            output += `<textarea class="subtitle">${section.trim()}</textarea>\n`;
+            // Adicionar a linha na seção atual
+            if (currentSection === 'cardapio') {
+                cardapio += linha + '\n';
+            } else if (currentSection === 'metabolismo') {
+                metabolismo += linha + '\n';
+            } else if (currentSection === 'exercicios') {
+                exercicios += linha + '\n';
+            } else if (currentSection === 'macros') {
+                macros += linha + '\n';
+            }
         }
     });
 
-    // Exibir o texto processado
-    document.getElementById('cardapioArea').value = output;
+    // Preencher os campos com os dados processados
+    document.getElementById('cardapioArea').value = cardapio.trim();
+    document.getElementById('metabolismArea').value = metabolismo.trim();
+    document.getElementById('exerciciosArea').value = exercicios.trim();
+    document.getElementById('macrosArea').value = macros.trim();
+
+    alert('Texto processado e distribuído nos campos!');
 });
 
-// Mostrar/ocultar conteúdos dinâmicos
+// Função para alternar exibição das seções
 function toggleContent(buttonId, contentId) {
     document.getElementById(buttonId).addEventListener('click', () => {
         const content = document.getElementById(contentId);
@@ -40,40 +68,4 @@ document.getElementById('saveButton').addEventListener('click', () => {
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${nomePaciente} - Dados</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-    <body>
-        <header>
-            <h1>${nomePaciente}</h1>
-            <p>Data: ${dataPaciente}</p>
-        </header>
-        <main>
-            <section>
-                <h2>Cardápio</h2>
-                <pre>${document.getElementById('cardapioArea').value}</pre>
-            </section>
-            <section>
-                <h2>Metabolismo</h2>
-                <pre>${document.getElementById('metabolismArea').value}</pre>
-            </section>
-            <section>
-                <h2>Exercícios</h2>
-                <pre>${document.getElementById('exerciciosArea').value}</pre>
-            </section>
-            <section>
-                <h2>Macros</h2>
-                <pre>${document.getElementById('macrosArea').value}</pre>
-            </section>
-        </main>
-    </body>
-    </html>
-    `;
-
-    const blob = new Blob([patientPage], { type: 'text/html' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `${nomePaciente.replace(/\s+/g, '-').toLowerCase()}.html`;
-    link.click();
-});
+        <meta name="
