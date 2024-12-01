@@ -20,45 +20,27 @@
             <input type="text" id="nomePaciente" class="form-control" placeholder="Digite o nome do paciente">
         </div>
 
-        <!-- Botão Metabolismo -->
-        <button class="btn btn-primary w-100 mb-3" id="metabolismButton">Metabolismo</button>
-        <div id="metabolismContent" class="accordion-content">
-            <textarea id="metabolismData" class="form-control" rows="5" placeholder="Cole os dados de metabolismo aqui..."></textarea>
+        <!-- Botão Cardápio -->
+        <button class="btn btn-primary w-100 mb-3" id="cardapioButton">Cardápio</button>
+        <div id="cardapioContent" class="accordion-content">
+            <!-- Botões para selecionar o dia -->
+            <div class="d-flex justify-content-around mb-3">
+                <button class="btn btn-outline-primary" onclick="showDay('segunda')">Segunda</button>
+                <button class="btn btn-outline-primary" onclick="showDay('terca')">Terça</button>
+                <button class="btn btn-outline-primary" onclick="showDay('quarta')">Quarta</button>
+                <button class="btn btn-outline-primary" onclick="showDay('quinta')">Quinta</button>
+                <button class="btn btn-outline-primary" onclick="showDay('sexta')">Sexta</button>
+                <button class="btn btn-outline-primary" onclick="showDay('sabado')">Sábado</button>
+                <button class="btn btn-outline-primary" onclick="showDay('domingo')">Domingo</button>
+            </div>
+            <!-- Área para exibir o cardápio do dia -->
+            <textarea id="cardapioDia" class="form-control" rows="10" placeholder="Insira o cardápio do dia selecionado..."></textarea>
         </div>
 
-        <!-- Botão Refeições -->
-        <button class="btn btn-primary w-100 mb-3" id="refeicoesButton">Refeições</button>
-        <div id="refeicoesContent" class="accordion-content">
-            <form id="refeicoesForm">
-                <div class="form-group">
-                    <label for="segunda">Segunda-feira:</label>
-                    <textarea id="segunda" class="form-control" rows="2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="terca">Terça-feira:</label>
-                    <textarea id="terca" class="form-control" rows="2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="quarta">Quarta-feira:</label>
-                    <textarea id="quarta" class="form-control" rows="2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="quinta">Quinta-feira:</label>
-                    <textarea id="quinta" class="form-control" rows="2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="sexta">Sexta-feira:</label>
-                    <textarea id="sexta" class="form-control" rows="2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="sabado">Sábado:</label>
-                    <textarea id="sabado" class="form-control" rows="2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="domingo">Domingo:</label>
-                    <textarea id="domingo" class="form-control" rows="2"></textarea>
-                </div>
-            </form>
+        <!-- Botão Informações Metabólicas -->
+        <button class="btn btn-primary w-100 mb-3" id="metabolismButton">Informações Metabólicas</button>
+        <div id="metabolismContent" class="accordion-content">
+            <textarea id="metabolismData" class="form-control" rows="5" placeholder="Cole informações metabólicas importantes aqui..."></textarea>
         </div>
 
         <!-- Botão Salvar -->
