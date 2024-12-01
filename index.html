@@ -25,7 +25,7 @@
         </div>
 
         <!-- Botões para inserir dados -->
-        <button class="btn btn-primary w-100 mb-3" id="cardapioButton">Cardápio</button>
+        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#cardapioContent">Cardápio</button>
         <div id="cardapioContent" class="accordion-content">
             <div class="d-flex justify-content-around mb-3">
                 <button class="btn btn-outline-primary" onclick="showDay('segunda')">Segunda</button>
@@ -44,17 +44,17 @@
             </div>
         </div>
 
-        <button class="btn btn-primary w-100 mb-3" id="metabolismButton">Metabolismo</button>
+        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#metabolismContent">Metabolismo</button>
         <div id="metabolismContent" class="accordion-content">
             <textarea id="metabolismArea" class="form-control" rows="5" placeholder="Informações metabólicas do paciente..."></textarea>
         </div>
 
-        <button class="btn btn-primary w-100 mb-3" id="exerciciosButton">Exercícios</button>
+        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#exerciciosContent">Exercícios</button>
         <div id="exerciciosContent" class="accordion-content">
             <textarea id="exerciciosArea" class="form-control" rows="5" placeholder="Dados de exercícios..."></textarea>
         </div>
 
-        <button class="btn btn-primary w-100 mb-3" id="macrosButton">Macros</button>
+        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#macrosContent">Macros</button>
         <div id="macrosContent" class="accordion-content">
             <textarea id="macrosArea" class="form-control" rows="5" placeholder="Distribuição de macronutrientes..."></textarea>
         </div>
