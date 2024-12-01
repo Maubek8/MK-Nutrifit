@@ -1,47 +1,210 @@
-document.getElementById('saveButton').addEventListener('click', () => {
-    // Coletar dados
-    const patientName = document.getElementById('patientName').value;
-    const weight = document.getElementById('weight').value;
-    const height = document.getElementById('height').value;
-    const imc = document.getElementById('imc').value;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK-CARDIOSPORT - Nutri Fit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #002f6c;
+            --secondary: #ffc107;
+            --background: #f8f9fa;
+        }
 
-    const activity = document.getElementById('activity').value;
-    const duration = document.getElementById('duration').value;
-    const calories = document.getElementById('calories').value;
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
+            padding: 1rem;
+        }
 
-    // Gerar conteúdo HTML
-    const patientPage = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${patientName} - Dados</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-    <body>
-        <header class="header">
-            <h1>${patientName}</h1>
-        </header>
-        <div class="container mt-4">
-            <h3>Dados Gerais</h3>
-            <p>Peso: ${weight} kg</p>
-            <p>Altura: ${height} m</p>
-            <p>IMC: ${imc}</p>
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-            <h3>Gasto Energético</h3>
-            <p>Atividade: ${activity}</p>
-            <p>Duração: ${duration} minutos</p>
-            <p>Calorias: ${calories} kcal</p>
+        .accordion-button {
+            background: white;
+            border: none;
+            padding: 1rem;
+            text-align: left;
+            width: 100%;
+            font-size: 1.2rem;
+            transition: background-color 0.3s;
+            border-bottom: 1px solid var(--background);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-button.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .accordion-content {
+            display: none;
+            overflow: hidden;
+            padding: 1rem;
+            background: white;
+            border-bottom: 1px solid var(--background);
+        }
+
+        .accordion-content form .mb-3 {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>MK-CARDIOSPORT</h1>
+        <h2 class="h6">Nutri Fit - Siga o seu objetivo</h2>
+    </header>
+
+    <div class="container">
+        <!-- Botão Dados do Paciente -->
+        <button class="accordion-button">Inserir Dados do Paciente <span>+</span></button>
+        <div class="accordion-content">
+            <form id="dadosPacienteForm">
+                <div class="mb-3">
+                    <label for="nomePaciente" class="form-label">Nome</label>
+                    <input type="text" id="nomePaciente" class="form-control" placeholder="Nome do Paciente">
+                </div>
+                <div class="mb-3">
+                    <label for="peso" class="form-label">Peso (kg)</label>
+                    <input type="number" id="peso" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="altura" class="form-label">Altura (m)</label>
+                    <input type="number" id="altura" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="imc" class="form-label">IMC</label>
+                    <input type="text" id="imc" class="form-control">
+                </div>
+            </form>
         </div>
-    </body>
-    </html>
-    `;
 
-    // Salvar como arquivo (exemplo com Blob)
-    const blob = new Blob([patientPage], { type: 'text/html' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `${patientName.replace(/\s+/g, '-').toLowerCase()}.html`;
-    link.click();
-});
+        <!-- Botão Refeições -->
+        <button class="accordion-button">Inserir Plano de Refeições <span>+</span></button>
+        <div class="accordion-content">
+            <form id="refeicoesForm">
+                <div class="mb-3">
+                    <label for="segunda" class="form-label">Segunda-feira</label>
+                    <textarea id="segunda" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="terca" class="form-label">Terça-feira</label>
+                    <textarea id="terca" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="quarta" class="form-label">Quarta-feira</label>
+                    <textarea id="quarta" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="quinta" class="form-label">Quinta-feira</label>
+                    <textarea id="quinta" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="sexta" class="form-label">Sexta-feira</label>
+                    <textarea id="sexta" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="sabado" class="form-label">Sábado</label>
+                    <textarea id="sabado" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="domingo" class="form-label">Domingo</label>
+                    <textarea id="domingo" class="form-control" rows="2"></textarea>
+                </div>
+            </form>
+        </div>
+
+        <!-- Botão Salvar -->
+        <div class="mt-4 text-center">
+            <button class="btn btn-success" id="saveButton">Salvar</button>
+        </div>
+    </div>
+
+    <script>
+        // Configurações dos botões de acordeão
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const currentlyActive = document.querySelector('.accordion-button.active');
+                if (currentlyActive && currentlyActive !== button) {
+                    currentlyActive.classList.remove('active');
+                    currentlyActive.nextElementSibling.style.display = 'none';
+                    currentlyActive.querySelector('span').textContent = '+';
+                }
+                
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+
+                // Atualize o símbolo +/- para expandido ou contraído
+                const span = button.querySelector('span');
+                span.textContent = button.classList.contains('active') ? '-' : '+';
+            });
+        });
+
+        // Botão Salvar
+        document.getElementById('saveButton').addEventListener('click', () => {
+            const nomePaciente = document.getElementById('nomePaciente').value;
+            const peso = document.getElementById('peso').value;
+            const altura = document.getElementById('altura').value;
+            const imc = document.getElementById('imc').value;
+
+            const segunda = document.getElementById('segunda').value;
+            const terca = document.getElementById('terca').value;
+            const quarta = document.getElementById('quarta').value;
+            const quinta = document.getElementById('quinta').value;
+            const sexta = document.getElementById('sexta').value;
+            const sabado = document.getElementById('sabado').value;
+            const domingo = document.getElementById('domingo').value;
+
+            // Gerar a página do paciente
+            const patientPage = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>${nomePaciente} - Dados</title>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            </head>
+            <body>
+                <header style="background: linear-gradient(135deg, #002f6c, #ffc107); color: white; padding: 1rem; text-align: center;">
+                    <h1>${nomePaciente}</h1>
+                </header>
+                <div class="container mt-4">
+                    <h3>Dados do Paciente</h3>
+                    <p>Peso: ${peso} kg</p>
+                    <p>Altura: ${altura} m</p>
+                    <p>IMC: ${imc}</p>
+
+                    <h3>Plano de Refeições</h3>
+                    <p><strong>Segunda-feira:</strong> ${segunda}</p>
+                    <p><strong>Terça-feira:</strong> ${terca}</p>
+                    <p><strong>Quarta-feira:</strong> ${quarta}</p>
+                    <p><strong>Quinta-feira:</strong> ${quinta}</p>
+                    <p><strong>Sexta-feira:</strong> ${sexta}</p>
+                    <p><strong>Sábado:</strong> ${sabado}</p>
+                    <p><strong>Domingo:</strong> ${domingo}</p>
+                </div>
+            </body>
+            </html>
+            `;
+
+            // Baixar como arquivo
+            const blob = new Blob([patientPage], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${nomePaciente.replace(/\s+/g, '-').toLowerCase()}.html`;
+            link.click();
+        });
+    </script>
+</body>
+</html>
