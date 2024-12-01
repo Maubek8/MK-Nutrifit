@@ -25,6 +25,14 @@ body {
     background: white;
     border: 1px solid var(--background);
     margin-top: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+    margin-top: 1rem;
+    width: 100%;
+    border-radius: 8px;
 }
 
 .form-group {
