@@ -5,7 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MK-CARDIOSPORT - Administrador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary: #002f6c;
+            --secondary: #ffc107;
+            --background: #f8f9fa;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+        .container {
+            padding: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+        }
+        .editor-tools {
+            margin-bottom: 1rem;
+        }
+        .content-editable {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 100px;
+            background: white;
+        }
+        @media (max-width: 768px) {
+            .logo {
+                width: 50px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -14,10 +60,24 @@
         <h2 class="h6">NutriFit PRO - Administração de Pacientes</h2>
     </header>
 
-    <main class="container mt-4">
-        <!-- Formulário de Gerar Página do Paciente -->
+    <main class="container">
+        <!-- Ferramentas de Edição -->
         <section>
-            <h2 class="mb-3">Gerar Página do Paciente</h2>
+            <h2>Ferramentas de Edição</h2>
+            <div class="editor-tools d-flex gap-2">
+                <button class="btn btn-secondary" onclick="applyFormat('bold')">Negrito</button>
+                <button class="btn btn-secondary" onclick="applyFormat('italic')">Itálico</button>
+                <button class="btn btn-secondary" onclick="applyFormat('foreColor', prompt('Digite um código de cor (ex: #ff0000):'))">Cor</button>
+            </div>
+            <!-- Área Editável -->
+            <div id="editableContent" class="content-editable" contenteditable="true">
+                <p>Selecione este texto e use as ferramentas acima para editá-lo.</p>
+            </div>
+        </section>
+
+        <!-- Gerar Página do Paciente -->
+        <section class="mt-5">
+            <h2>Gerar Página do Paciente</h2>
             <div class="mb-3">
                 <label for="nomePaciente" class="form-label">Nome do Paciente</label>
                 <input type="text" id="nomePaciente" class="form-control" placeholder="Digite o nome do paciente">
@@ -28,14 +88,69 @@
             </div>
             <button id="gerarPagina" class="btn btn-primary w-100">Gerar e Baixar Página</button>
         </section>
-
-        <!-- Lista de Pacientes -->
-        <section class="mt-5">
-            <h2 class="mb-3">Lista de Pacientes</h2>
-            <ul id="patientList" class="list-group"></ul>
-        </section>
     </main>
 
-    <script src="script.js"></script>
+    <script>
+        /**
+         * Aplica formatação ao texto selecionado na área editável.
+         * @param {string} command - O comando de edição (ex: 'bold', 'italic', 'foreColor').
+         * @param {string} value - O valor adicional (ex: cor hexadecimal para 'foreColor').
+         */
+        function applyFormat(command, value = null) {
+            document.execCommand(command, false, value);
+        }
+
+        /**
+         * Gera uma página HTML completa do paciente e a baixa automaticamente.
+         * @param {string} patientName - Nome do paciente.
+         * @param {string} patientData - Dados do paciente.
+         */
+        function generatePatientPage(patientName, patientData) {
+            const css = `
+                body { font-family: 'Roboto', sans-serif; background-color: #f8f9fa; padding: 1rem; margin: 0; }
+                .header { background: linear-gradient(135deg, #002f6c, #ffc107); color: white; text-align: center; padding: 1rem; }
+                .content { padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); }
+                textarea { width: 100%; border-radius: 8px; padding: 1rem; border: 1px solid #ddd; }
+            `;
+            const html = `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>${patientName} - Página do Paciente</title>
+                    <style>${css}</style>
+                </head>
+                <body>
+                    <header class="header">
+                        <h1>${patientName}</h1>
+                        <h2>Informações do Paciente</h2>
+                    </header>
+                    <div class="content">
+                        <textarea readonly>${patientData}</textarea>
+                    </div>
+                </body>
+                </html>
+            `;
+            const blob = new Blob([html], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${patientName.replace(/\s+/g, '_')}.html`;
+            link.click();
+        }
+
+        // Gerar página ao clicar no botão
+        document.getElementById('gerarPagina').addEventListener('click', () => {
+            const patientName = document.getElementById('nomePaciente').value.trim();
+            const patientData = document.getElementById('dadosPaciente').value.trim();
+
+            if (!patientName || !patientData) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+
+            generatePatientPage(patientName, patientData);
+        });
+    </script>
 </body>
 </html>
