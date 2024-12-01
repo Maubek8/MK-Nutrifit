@@ -47,6 +47,25 @@
         .btn {
             margin-bottom: 0.5rem;
         }
+
+        .day-buttons {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .btn-day {
+            background-color: var(--button-gray);
+            color: black;
+            border: 1px solid var(--button-gray);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .btn-day:hover {
+            background-color: #c6c6c6;
+        }
     </style>
 </head>
 <body>
@@ -69,7 +88,16 @@
         <!-- Botões para alternar seções -->
         <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="cardapioSection">Refeições</button>
         <div id="cardapioSection" class="section">
-            <textarea id="cardapioArea" class="form-control" rows="5" placeholder="Insira o cardápio..."></textarea>
+            <div class="day-buttons">
+                <button class="btn-day" onclick="showDay('segunda')">Segunda</button>
+                <button class="btn-day" onclick="showDay('terca')">Terça</button>
+                <button class="btn-day" onclick="showDay('quarta')">Quarta</button>
+                <button class="btn-day" onclick="showDay('quinta')">Quinta</button>
+                <button class="btn-day" onclick="showDay('sexta')">Sexta</button>
+                <button class="btn-day" onclick="showDay('sabado')">Sábado</button>
+                <button class="btn-day" onclick="showDay('domingo')">Domingo</button>
+            </div>
+            <textarea id="cardapioArea" class="form-control" rows="5" placeholder="Insira o cardápio do dia..."></textarea>
         </div>
 
         <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="metabolismSection">Metabolismo</button>
