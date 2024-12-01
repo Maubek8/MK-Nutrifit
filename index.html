@@ -10,7 +10,6 @@
             --primary: #002f6c;
             --secondary: #ffc107;
             --background: #f8f9fa;
-            --text-color: #333;
             --button-gray: #d6d6d6;
         }
 
@@ -42,7 +41,7 @@
             margin: 1rem;
         }
 
-        .accordion-content {
+        .section {
             display: none;
             margin-top: 1rem;
             padding: 1rem;
@@ -103,8 +102,8 @@
         </div>
 
         <!-- Botões para inserir dados -->
-        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#cardapioContent">Refeições</button>
-        <div id="cardapioContent" class="accordion-content">
+        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="cardapioContent">Refeições</button>
+        <div id="cardapioContent" class="section">
             <div class="d-flex justify-content-around mb-3">
                 <button class="btn btn-gray-light" onclick="showDay('segunda')">Segunda</button>
                 <button class="btn btn-gray-light" onclick="showDay('terca')">Terça</button>
@@ -114,22 +113,22 @@
                 <button class="btn btn-gray-light" onclick="showDay('sabado')">Sábado</button>
                 <button class="btn btn-gray-light" onclick="showDay('domingo')">Domingo</button>
             </div>
-            <textarea id="cardapioDia" class="form-control editable" rows="5" placeholder="Insira o cardápio para o dia selecionado..."></textarea>
+            <textarea id="cardapioDia" class="form-control" rows="5" placeholder="Insira o cardápio para o dia selecionado..."></textarea>
         </div>
 
-        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#metabolismContent">Metabolismo</button>
-        <div id="metabolismContent" class="accordion-content">
-            <textarea id="metabolismArea" class="form-control editable" rows="5" placeholder="Informações metabólicas do paciente..."></textarea>
+        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="metabolismContent">Metabolismo</button>
+        <div id="metabolismContent" class="section">
+            <textarea id="metabolismArea" class="form-control" rows="5" placeholder="Informações metabólicas do paciente..."></textarea>
         </div>
 
-        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#exerciciosContent">Exercícios</button>
-        <div id="exerciciosContent" class="accordion-content">
-            <textarea id="exerciciosArea" class="form-control editable" rows="5" placeholder="Dados de exercícios..."></textarea>
+        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="exerciciosContent">Exercícios</button>
+        <div id="exerciciosContent" class="section">
+            <textarea id="exerciciosArea" class="form-control" rows="5" placeholder="Dados de exercícios..."></textarea>
         </div>
 
-        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#macrosContent">Macros</button>
-        <div id="macrosContent" class="accordion-content">
-            <textarea id="macrosArea" class="form-control editable" rows="5" placeholder="Distribuição de macronutrientes..."></textarea>
+        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="macrosContent">Macros</button>
+        <div id="macrosContent" class="section">
+            <textarea id="macrosArea" class="form-control" rows="5" placeholder="Distribuição de macronutrientes..."></textarea>
         </div>
 
         <!-- Botão Salvar -->
@@ -138,76 +137,6 @@
         </div>
     </div>
 
-    <script>
-        const cardapios = {
-            segunda: "",
-            terca: "",
-            quarta: "",
-            quinta: "",
-            sexta: "",
-            sabado: "",
-            domingo: "",
-        };
-
-        // Mostrar cardápio do dia selecionado
-        function showDay(day) {
-            document.getElementById('cardapioDia').value = cardapios[day] || '';
-            document.getElementById('cardapioDia').dataset.currentDay = day;
-        }
-
-        // Salvar cardápio do dia editado
-        document.getElementById('cardapioDia').addEventListener('input', function () {
-            const day = this.dataset.currentDay;
-            cardapios[day] = this.value;
-        });
-
-        // Alternar exibição das seções
-        document.querySelectorAll('.toggle-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const target = document.querySelector(button.dataset.target);
-                const isVisible = target.style.display === 'block';
-                document.querySelectorAll('.accordion-content').forEach(content => {
-                    content.style.display = 'none';
-                });
-                target.style.display = isVisible ? 'none' : 'block';
-            });
-        });
-
-        // Salvar a página do paciente localmente
-        document.getElementById('saveButton').addEventListener('click', () => {
-            const nomePaciente = document.getElementById('nomePaciente').value.trim() || 'Paciente';
-            const dataPaciente = document.getElementById('dataPaciente').value || new Date().toLocaleDateString();
-            const metabolism = document.getElementById('metabolismArea').value;
-            const exercicios = document.getElementById('exerciciosArea').value;
-            const macros = document.getElementById('macrosArea').value;
-            const cardapioDia = document.getElementById('cardapioDia').value;
-
-            const css = document.querySelector('style').innerHTML;
-            const content = `
-                <header class="header">
-                    <h1>${nomePaciente}</h1>
-                    <h2>Data: ${dataPaciente}</h2>
-                </header>
-                <div class="container">
-                    <h3>Cardápio</h3>
-                    <p>${cardapioDia}</p>
-                    <h3>Metabolismo</h3>
-                    <p>${metabolism}</p>
-                    <h3>Exercícios</h3>
-                    <p>${exercicios}</p>
-                    <h3>Macros</h3>
-                    <p>${macros}</p>
-                </div>
-            `;
-
-            const blob = new Blob([`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>${nomePaciente} - Página do Paciente</title>
-                    <style>${css}</style>
-                </head>
-                <body>${content}</body>
-                </html>
+    <script src="script.js"></script>
+</body>
+</html>
