@@ -1,3 +1,22 @@
+// Alternar visibilidade das seções
+document.querySelectorAll('.toggle-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const targetId = button.dataset.target;
+        const targetSection = document.getElementById(targetId);
+
+        // Fechar todas as outras seções
+        document.querySelectorAll('.section').forEach(section => {
+            if (section !== targetSection) {
+                section.style.display = 'none';
+            }
+        });
+
+        // Alternar visibilidade da seção clicada
+        targetSection.style.display = targetSection.style.display === 'block' ? 'none' : 'block';
+    });
+});
+
+// Salvar página do paciente
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value.trim() || 'Paciente';
     const dataPaciente = document.getElementById('dataPaciente').value || new Date().toLocaleDateString();
@@ -35,23 +54,21 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 }
                 .section {
                     display: none;
+                    margin-top: 1rem;
                     padding: 1rem;
                     border: 1px solid #ddd;
                     background-color: white;
                     border-radius: 8px;
-                    margin-top: 1rem;
                 }
                 .btn {
-                    display: block;
-                    width: 100%;
                     margin-bottom: 0.5rem;
+                    width: 100%;
                     padding: 10px;
                     font-size: 1rem;
-                    color: white;
                     background-color: #002f6c;
+                    color: white;
                     border: none;
                     border-radius: 5px;
-                    text-align: center;
                 }
                 .btn:hover {
                     background-color: #ffc107;
@@ -66,28 +83,16 @@ document.getElementById('saveButton').addEventListener('click', () => {
             </header>
             <div class="container">
                 <button class="btn" onclick="toggleVisibility('cardapioSection')">Refeições</button>
-                <div id="cardapioSection" class="section">
-                    <h3>Refeições</h3>
-                    <p>${cardapio}</p>
-                </div>
+                <div id="cardapioSection" class="section"><p>${cardapio}</p></div>
 
                 <button class="btn" onclick="toggleVisibility('metabolismSection')">Metabolismo</button>
-                <div id="metabolismSection" class="section">
-                    <h3>Metabolismo</h3>
-                    <p>${metabolism}</p>
-                </div>
+                <div id="metabolismSection" class="section"><p>${metabolism}</p></div>
 
                 <button class="btn" onclick="toggleVisibility('exerciciosSection')">Exercícios</button>
-                <div id="exerciciosSection" class="section">
-                    <h3>Exercícios</h3>
-                    <p>${exercicios}</p>
-                </div>
+                <div id="exerciciosSection" class="section"><p>${exercicios}</p></div>
 
                 <button class="btn" onclick="toggleVisibility('macrosSection')">Macros</button>
-                <div id="macrosSection" class="section">
-                    <h3>Macros</h3>
-                    <p>${macros}</p>
-                </div>
+                <div id="macrosSection" class="section"><p>${macros}</p></div>
             </div>
             <script>
                 function toggleVisibility(id) {
