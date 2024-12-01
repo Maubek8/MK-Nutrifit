@@ -1,155 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MK-CARDIOSPORT - Nutri Fit</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #002f6c; /* Azul escuro */
-            --secondary: #ffc107; /* Amarelo */
-            --background: #f8f9fa; /* Cinza claro */
-            --text: #333333; /* Texto escuro */
-        }
+document.getElementById('saveButton').addEventListener('click', () => {
+    // Coletar dados
+    const patientName = document.getElementById('patientName').value;
+    const weight = document.getElementById('weight').value;
+    const height = document.getElementById('height').value;
+    const imc = document.getElementById('imc').value;
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background);
-            padding: 1rem;
-        }
+    const activity = document.getElementById('activity').value;
+    const duration = document.getElementById('duration').value;
+    const calories = document.getElementById('calories').value;
 
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
+    // Gerar conteúdo HTML
+    const patientPage = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${patientName} - Dados</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <header class="header">
+            <h1>${patientName}</h1>
+        </header>
+        <div class="container mt-4">
+            <h3>Dados Gerais</h3>
+            <p>Peso: ${weight} kg</p>
+            <p>Altura: ${height} m</p>
+            <p>IMC: ${imc}</p>
 
-        .accordion-button {
-            background: white;
-            border: none;
-            padding: 1rem;
-            text-align: left;
-            width: 100%;
-            font-size: 1.2rem;
-            transition: background-color 0.3s;
-            border-bottom: 1px solid var(--background);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .accordion-button.active {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .accordion-content {
-            display: none;
-            overflow: hidden;
-            padding: 1rem;
-            background: white;
-            border-bottom: 1px solid var(--background);
-        }
-
-        .accordion-content form {
-            margin-top: 1rem;
-        }
-
-        .accordion-content form .mb-3 {
-            margin-bottom: 1.5rem;
-        }
-    </style>
-</head>
-<body>
-    <header class="header">
-        <h1>MK-CARDIOSPORT</h1>
-        <h2 class="h6">Nutri Fit - Siga o seu objetivo</h2>
-    </header>
-
-    <div class="container">
-        <!-- Nome do Paciente -->
-        <div class="mb-4">
-            <label for="patientName" class="form-label">Nome do Paciente:</label>
-            <input type="text" id="patientName" class="form-control" placeholder="Digite o nome do paciente">
+            <h3>Gasto Energético</h3>
+            <p>Atividade: ${activity}</p>
+            <p>Duração: ${duration} minutos</p>
+            <p>Calorias: ${calories} kcal</p>
         </div>
+    </body>
+    </html>
+    `;
 
-        <!-- Acordeão -->
-        <button class="accordion-button">
-            Dados Gerais <span>+</span>
-        </button>
-        <div class="accordion-content">
-            <form>
-                <div class="mb-3">
-                    <label for="weight" class="form-label">Peso (kg)</label>
-                    <input type="number" id="weight" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label for="height" class="form-label">Altura (m)</label>
-                    <input type="number" id="height" class="form-control">
-                </div>
-                <button class="btn btn-primary">Salvar</button>
-            </form>
-        </div>
-
-        <button class="accordion-button">
-            Gasto Energético <span>+</span>
-        </button>
-        <div class="accordion-content">
-            <p>Insira os dados de atividades físicas e calorias queimadas.</p>
-        </div>
-
-        <button class="accordion-button">
-            Macros <span>+</span>
-        </button>
-        <div class="accordion-content">
-            <p>Defina a distribuição de macronutrientes.</p>
-        </div>
-
-        <button class="accordion-button">
-            Gráficos <span>+</span>
-        </button>
-        <div class="accordion-content">
-            <p>Visualize a evolução do paciente em gráficos.</p>
-        </div>
-
-        <button class="accordion-button">
-            Refeições <span>+</span>
-        </button>
-        <div class="accordion-content">
-            <p>Planeje as refeições por dia da semana.</p>
-        </div>
-
-        <button class="accordion-button">
-            Alternativas <span>+</span>
-        </button>
-        <div class="accordion-content">
-            <p>Insira opções de substituição alimentar.</p>
-        </div>
-    </div>
-
-    <script>
-        // Configurações dos botões de acordeão
-        document.querySelectorAll('.accordion-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const currentlyActive = document.querySelector('.accordion-button.active');
-                if (currentlyActive && currentlyActive !== button) {
-                    currentlyActive.classList.remove('active');
-                    currentlyActive.nextElementSibling.style.display = 'none';
-                    currentlyActive.querySelector('span').textContent = '+';
-                }
-                
-                button.classList.toggle('active');
-                const content = button.nextElementSibling;
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
-
-                // Atualize o símbolo +/- para expandido ou contraído
-                const span = button.querySelector('span');
-                span.textContent = button.classList.contains('active') ? '-' : '+';
-            });
-        });
-    </script>
-</body>
-</html>
+    // Salvar como arquivo (exemplo com Blob)
+    const blob = new Blob([patientPage], { type: 'text/html' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${patientName.replace(/\s+/g, '-').toLowerCase()}.html`;
+    link.click();
+});
