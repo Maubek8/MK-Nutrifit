@@ -55,22 +55,18 @@ document.getElementById('saveButton').addEventListener('click', () => {
             <div class="container">
                 <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('metabolismSection')">Metabolismo</button>
                 <div id="metabolismSection" class="section">
-                    <h3>Metabolismo</h3>
                     <p>${metabolism}</p>
                 </div>
                 <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('refeicoesSection')">Refeições</button>
                 <div id="refeicoesSection" class="section">
-                    <h3>Refeições</h3>
                     <p>${cardapio}</p>
                 </div>
                 <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('exerciciosSection')">Exercícios</button>
                 <div id="exerciciosSection" class="section">
-                    <h3>Exercícios</h3>
                     <p>${exercicios}</p>
                 </div>
                 <button class="btn btn-primary w-100 mb-3" onclick="toggleVisibility('macrosSection')">Macros</button>
                 <div id="macrosSection" class="section">
-                    <h3>Macros</h3>
                     <p>${macros}</p>
                 </div>
             </div>
