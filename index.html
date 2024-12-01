@@ -20,8 +20,15 @@
             <input type="text" id="nomePaciente" class="form-control" placeholder="Digite o nome do paciente">
         </div>
 
+        <!-- Área para inserir o texto completo -->
+        <div class="form-group">
+            <label for="textoCompleto" class="form-label">Cole o texto completo do cardápio:</label>
+            <textarea id="textoCompleto" class="form-control" rows="10" placeholder="Cole aqui o texto completo com os cardápios organizados por dia da semana."></textarea>
+        </div>
+        <button class="btn btn-primary w-100 mb-3" id="processarTexto">Processar Texto</button>
+
         <!-- Botão Cardápio -->
-        <button class="btn btn-primary w-100 mb-3" id="cardapioButton">Cardápio</button>
+        <button class="btn btn-primary w-100 mb-3" id="cardapioButton">Editar Cardápio</button>
         <div id="cardapioContent" class="accordion-content">
             <!-- Botões para selecionar o dia -->
             <div class="d-flex justify-content-around mb-3">
@@ -34,13 +41,7 @@
                 <button class="btn btn-outline-primary" onclick="showDay('domingo')">Domingo</button>
             </div>
             <!-- Área para exibir o cardápio do dia -->
-            <textarea id="cardapioDia" class="form-control" rows="10" placeholder="Insira o cardápio do dia selecionado..."></textarea>
-        </div>
-
-        <!-- Botão Informações Metabólicas -->
-        <button class="btn btn-primary w-100 mb-3" id="metabolismButton">Informações Metabólicas</button>
-        <div id="metabolismContent" class="accordion-content">
-            <textarea id="metabolismData" class="form-control" rows="5" placeholder="Cole informações metabólicas importantes aqui..."></textarea>
+            <textarea id="cardapioDia" class="form-control" rows="10" placeholder="Cardápio do dia selecionado..."></textarea>
         </div>
 
         <!-- Botão Salvar -->
