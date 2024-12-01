@@ -24,31 +24,35 @@
             padding: 1rem;
         }
 
-        .main-buttons button {
+        .expandable-button {
             background: white;
             border: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s;
+            padding: 1rem;
+            text-align: left;
+            width: 100%;
+            font-size: 1.2rem;
+            transition: background-color 0.3s;
+            border-bottom: 1px solid var(--background);
         }
 
-        .main-buttons button:hover {
-            background: var(--secondary);
+        .expandable-button:hover {
+            background-color: var(--secondary);
             color: white;
         }
 
-        .tab-content {
+        .content-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
             background: white;
-            padding: 2rem;
-            margin-top: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 0 1rem;
+            border-bottom: 1px solid var(--background);
         }
-        .tab-pane {
-    transition: opacity 0.3s ease-in-out;
-}
 
+        .content-section.open {
+            max-height: 500px; /* Defina um tamanho suficiente para o conteúdo expandido */
+            padding: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -64,18 +68,9 @@
         </div>
     </header>
 
-   <nav class="main-buttons container d-flex flex-wrap justify-content-around mt-4">
-    <button class="btn btn-lg col-12 col-md-auto mb-2" data-bs-toggle="tab" data-bs-target="#dados-gerais">Dados Gerais</button>
-    <button class="btn btn-lg col-12 col-md-auto mb-2" data-bs-toggle="tab" data-bs-target="#gasto-energetico">Gasto Energético</button>
-    <button class="btn btn-lg col-12 col-md-auto mb-2" data-bs-toggle="tab" data-bs-target="#macros">Macros</button>
-    <button class="btn btn-lg col-12 col-md-auto mb-2" data-bs-toggle="tab" data-bs-target="#graficos">Gráficos</button>
-    <button class="btn btn-lg col-12 col-md-auto mb-2" data-bs-toggle="tab" data-bs-target="#refeicoes">Refeições</button>
-    <button class="btn btn-lg col-12 col-md-auto mb-2" data-bs-toggle="tab" data-bs-target="#alternativas">Alternativas</button>
-</nav>
-
-
-    <div class="tab-content container mt-4">
-        <div class="tab-pane fade show active" id="dados-gerais">
+    <div class="container mt-4">
+        <button class="expandable-button" onclick="toggleSection('dados-gerais')">Dados Gerais</button>
+        <div id="dados-gerais" class="content-section">
             <h3>Dados Gerais</h3>
             <form>
                 <div class="mb-3">
@@ -94,32 +89,51 @@
             </form>
         </div>
 
-        <div class="tab-pane fade" id="gasto-energetico">
+        <button class="expandable-button" onclick="toggleSection('gasto-energetico')">Gasto Energético</button>
+        <div id="gasto-energetico" class="content-section">
             <h3>Gasto Energético</h3>
             <p>Insira os dados de atividades físicas e calorias queimadas.</p>
         </div>
 
-        <div class="tab-pane fade" id="macros">
+        <button class="expandable-button" onclick="toggleSection('macros')">Macros</button>
+        <div id="macros" class="content-section">
             <h3>Macros</h3>
             <p>Defina a distribuição de macronutrientes.</p>
         </div>
 
-        <div class="tab-pane fade" id="graficos">
+        <button class="expandable-button" onclick="toggleSection('graficos')">Gráficos</button>
+        <div id="graficos" class="content-section">
             <h3>Gráficos</h3>
             <p>Visualize a evolução do paciente em gráficos.</p>
         </div>
 
-        <div class="tab-pane fade" id="refeicoes">
+        <button class="expandable-button" onclick="toggleSection('refeicoes')">Refeições</button>
+        <div id="refeicoes" class="content-section">
             <h3>Refeições</h3>
             <p>Planeje as refeições por dia da semana.</p>
         </div>
 
-        <div class="tab-pane fade" id="alternativas">
+        <button class="expandable-button" onclick="toggleSection('alternativas')">Alternativas</button>
+        <div id="alternativas" class="content-section">
             <h3>Alternativas</h3>
             <p>Insira opções de substituição alimentar.</p>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+
+            // Fecha qualquer outra seção aberta
+            document.querySelectorAll('.content-section').forEach(sec => {
+                if (sec !== section && sec.classList.contains('open')) {
+                    sec.classList.remove('open');
+                }
+            });
+
+            // Abre/fecha a seção clicada
+            section.classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
