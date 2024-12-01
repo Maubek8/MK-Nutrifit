@@ -12,17 +12,22 @@ document.getElementById('saveButton').addEventListener('click', () => {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${nomePaciente} - Dados do Paciente</title>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            <title>${nomePaciente} - Página do Paciente</title>
             <style>
+                :root {
+                    --primary: #002f6c;
+                    --secondary: #ffc107;
+                    --background: #f8f9fa;
+                    --button-gray: #d6d6d6;
+                }
                 body {
                     font-family: 'Roboto', sans-serif;
-                    background-color: #f8f9fa;
+                    background-color: var(--background);
                     margin: 0;
                     padding: 0;
                 }
                 .header {
-                    background: linear-gradient(135deg, #002f6c, #ffc107);
+                    background: linear-gradient(135deg, var(--primary), var(--secondary));
                     color: white;
                     text-align: center;
                     padding: 1rem;
@@ -101,7 +106,7 @@ document.getElementById('saveButton').addEventListener('click', () => {
         </html>
     `;
 
-    // Criar e baixar o arquivo HTML gerado
+    // Criar o arquivo HTML
     const blob = new Blob([html], { type: 'text/html' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
