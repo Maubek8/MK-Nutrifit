@@ -20,32 +20,6 @@ document.getElementById('cardapioDia').addEventListener('input', function () {
     cardapios[day] = this.value;
 });
 
-// Aplicar formatação de texto
-function applyFormat(command, value = null) {
-    const activeTextarea = document.querySelector('textarea:focus');
-    if (activeTextarea) {
-        const start = activeTextarea.selectionStart;
-        const end = activeTextarea.selectionEnd;
-        const text = activeTextarea.value;
-        const selectedText = text.substring(start, end);
-
-        let formattedText;
-        if (command === 'bold') {
-            formattedText = `**${selectedText}**`;
-        } else if (command === 'italic') {
-            formattedText = `*${selectedText}*`;
-        } else if (command === 'foreColor') {
-            formattedText = `<span style="color:${value};">${selectedText}</span>`;
-        }
-
-        activeTextarea.value =
-            text.substring(0, start) + formattedText + text.substring(end);
-        activeTextarea.setSelectionRange(start, start + formattedText.length);
-    } else {
-        alert('Clique em um campo para aplicar a formatação.');
-    }
-}
-
 // Alternar exibição das seções
 document.querySelectorAll('.toggle-button').forEach(button => {
     button.addEventListener('click', () => {
@@ -58,57 +32,62 @@ document.querySelectorAll('.toggle-button').forEach(button => {
     });
 });
 
-// Salvar os dados e criar a página do paciente
+// Salvar os dados e enviar ao servidor
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value;
     const dataPaciente = document.getElementById('dataPaciente').value;
+    const metabolism = document.getElementById('metabolismArea').value;
+    const exercicios = document.getElementById('exerciciosArea').value;
+    const macros = document.getElementById('macrosArea').value;
 
-    const patientPage = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${nomePaciente} - Dados</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <header class="header">
-            <img src="logo.png" alt="MK Logo" class="logo">
-            <h1>MK-CARDIOSPORT</h1>
-            <h2 class="h6">NutriFit PRO - Siga o seu Objetivo!</h2>
-        </header>
-        <main class="container">
-            <section>
-                <h2>Cardápio</h2>
-                ${Object.entries(cardapios).map(([dia, conteudo]) => `
-                    <div>
-                        <h3>${dia.charAt(0).toUpperCase() + dia.slice(1)}</h3>
-                        <pre>${conteudo || "Nenhum cardápio inserido."}</pre>
-                    </div>
-                `).join('')}
-            </section>
-            <section>
-                <h2>Metabolismo</h2>
-                <pre>${document.getElementById('metabolismArea').value}</pre>
-            </section>
-            <section>
-                <h2>Exercícios</h2>
-                <pre>${document.getElementById('exerciciosArea').value}</pre>
-            </section>
-            <section>
-                <h2>Macros</h2>
-                <pre>${document.getElementById('macrosArea').value}</pre>
-            </section>
-        </main>
-    </body>
-    </html>
-    `;
+    const requestData = {
+        nomePaciente,
+        dataPaciente,
+        cardapios,
+        metabolism,
+        exercicios,
+        macros,
+    };
 
-    const blob = new Blob([patientPage], { type: 'text/html' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `${nomePaciente.replace(/\s+/g, '-').toLowerCase()}.html`;
-    link.click();
+    fetch('/save-patient', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestData),
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            loadPatientList(); // Atualiza a lista de pacientes
+        })
+        .catch(error => {
+            console.error('Erro ao salvar os dados:', error);
+        });
 });
+
+// Função para carregar a lista de pacientes salvos
+function loadPatientList() {
+    fetch('/list-patients')
+        .then(response => response.json())
+        .then(patients => {
+            const patientList = document.getElementById('patientList');
+            patientList.innerHTML = '';
+
+            patients.forEach(patient => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+
+                listItem.innerHTML = `
+                    <span>${patient.name}</span>
+                    <a href="${patient.link}" target="_blank" class="btn btn-primary btn-sm">Acessar</a>
+                `;
+
+                patientList.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao carregar a lista de pacientes:', error);
+        });
+}
+
+// Carregar a lista de pacientes ao carregar a página
+document.addEventListener('DOMContentLoaded', loadPatientList);
