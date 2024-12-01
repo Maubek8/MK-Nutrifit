@@ -1,26 +1,41 @@
+const cardapios = {
+    segunda: "",
+    terca: "",
+    quarta: "",
+    quinta: "",
+    sexta: "",
+    sabado: "",
+    domingo: "",
+};
+
 // Alternar visibilidade das seções
 document.querySelectorAll('.toggle-button').forEach(button => {
     button.addEventListener('click', () => {
         const targetId = button.dataset.target;
         const targetSection = document.getElementById(targetId);
 
-        // Fechar todas as outras seções
         document.querySelectorAll('.section').forEach(section => {
-            if (section !== targetSection) {
-                section.style.display = 'none';
-            }
+            section.style.display = section === targetSection ? 'block' : 'none';
         });
-
-        // Alternar visibilidade da seção clicada
-        targetSection.style.display = targetSection.style.display === 'block' ? 'none' : 'block';
     });
+});
+
+// Exibir cardápio por dia
+function showDay(day) {
+    document.getElementById('cardapioArea').value = cardapios[day] || '';
+    document.getElementById('cardapioArea').dataset.currentDay = day;
+}
+
+// Salvar o cardápio do dia editado
+document.getElementById('cardapioArea').addEventListener('input', function () {
+    const day = this.dataset.currentDay;
+    cardapios[day] = this.value;
 });
 
 // Salvar página do paciente
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value.trim() || 'Paciente';
     const dataPaciente = document.getElementById('dataPaciente').value || new Date().toLocaleDateString();
-    const cardapio = document.getElementById('cardapioArea').value || 'Nenhuma informação adicionada.';
     const metabolism = document.getElementById('metabolismArea').value || 'Nenhuma informação adicionada.';
     const exercicios = document.getElementById('exerciciosArea').value || 'Nenhuma informação adicionada.';
     const macros = document.getElementById('macrosArea').value || 'Nenhuma informação adicionada.';
@@ -33,47 +48,12 @@ document.getElementById('saveButton').addEventListener('click', () => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${nomePaciente} - Dados</title>
             <style>
-                body {
-                    font-family: 'Roboto', sans-serif;
-                    background-color: #f8f9fa;
-                    margin: 0;
-                    padding: 0;
-                }
-                .header {
-                    background: linear-gradient(135deg, #002f6c, #ffc107);
-                    color: white;
-                    text-align: center;
-                    padding: 1rem;
-                }
-                .container {
-                    margin: 1rem;
-                    padding: 1rem;
-                    background-color: white;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-                }
-                .section {
-                    display: none;
-                    margin-top: 1rem;
-                    padding: 1rem;
-                    border: 1px solid #ddd;
-                    background-color: white;
-                    border-radius: 8px;
-                }
-                .btn {
-                    margin-bottom: 0.5rem;
-                    width: 100%;
-                    padding: 10px;
-                    font-size: 1rem;
-                    background-color: #002f6c;
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
-                }
-                .btn:hover {
-                    background-color: #ffc107;
-                    color: black;
-                }
+                body { font-family: 'Roboto', sans-serif; background: #f8f9fa; padding: 1rem; }
+                .header { background: linear-gradient(135deg, #002f6c, #ffc107); color: white; text-align: center; padding: 1rem; }
+                .container { margin: 1rem; padding: 1rem; background: white; border-radius: 8px; }
+                .btn { width: 100%; margin-bottom: 10px; padding: 10px; font-size: 1rem; }
+                .section { display: none; padding: 10px; margin-top: 10px; }
+                pre { white-space: pre-wrap; word-wrap: break-word; }
             </style>
         </head>
         <body>
@@ -82,17 +62,16 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 <h2>Data: ${dataPaciente}</h2>
             </header>
             <div class="container">
-                <button class="btn" onclick="toggleVisibility('cardapioSection')">Refeições</button>
-                <div id="cardapioSection" class="section"><p>${cardapio}</p></div>
-
-                <button class="btn" onclick="toggleVisibility('metabolismSection')">Metabolismo</button>
-                <div id="metabolismSection" class="section"><p>${metabolism}</p></div>
-
-                <button class="btn" onclick="toggleVisibility('exerciciosSection')">Exercícios</button>
-                <div id="exerciciosSection" class="section"><p>${exercicios}</p></div>
-
-                <button class="btn" onclick="toggleVisibility('macrosSection')">Macros</button>
-                <div id="macrosSection" class="section"><p>${macros}</p></div>
+                <button class="btn" onclick="toggleVisibility('metabolism')">Metabolismo</button>
+                <div id="metabolism" class="section"><pre>${metabolism}</pre></div>
+                <button class="btn" onclick="toggleVisibility('refeicoes')">Refeições</button>
+                <div id="refeicoes" class="section">
+                    <pre>${Object.entries(cardapios).map(([day, content]) => `${day}: ${content}`).join('\n')}</pre>
+                </div>
+                <button class="btn" onclick="toggleVisibility('exercicios')">Exercícios</button>
+                <div id="exercicios" class="section"><pre>${exercicios}</pre></div>
+                <button class="btn" onclick="toggleVisibility('macros')">Macros</button>
+                <div id="macros" class="section"><pre>${macros}</pre></div>
             </div>
             <script>
                 function toggleVisibility(id) {
