@@ -1,73 +1,35 @@
-// Função para carregar seções dinâmicas
-function loadSection(section) {
-    const content = document.getElementById("dynamic-content");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK-CARDIOSPORT - Nutri Fit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="MK-CARDIOSPORT Logo" class="logo">
+        <h1>MK-CARDIOSPORT</h1>
+        <h2>Nutri Fit - Siga o seu objetivo!</h2>
+    </header>
 
-    switch (section) {
-        case "dados-gerais":
-            content.innerHTML = `
-                <h3>Preencha os Dados Gerais</h3>
-                <form id="dadosGeraisForm">
-                    <label for="patientName">Nome do Paciente:</label>
-                    <input type="text" id="patientName" name="patientName" required>
+    <main>
+        <section class="button-container">
+            <button onclick="loadPage('pages/dados-gerais.html')">Dados Gerais</button>
+            <button onclick="loadPage('pages/gasto-energetico.html')">Gasto Energético</button>
+            <button onclick="loadPage('pages/macros.html')">Distribuição de Macros</button>
+            <button onclick="loadPage('pages/graficos.html')">Gráficos</button>
+            <button onclick="loadPage('pages/refeicoes.html')">Refeições</button>
+            <button onclick="loadPage('pages/alternativas.html')">Alternativas</button>
+        </section>
 
-                    <label for="weight">Peso (kg):</label>
-                    <input type="number" id="weight" name="weight" step="0.1" required>
+        <!-- Área para conteúdo dinâmico -->
+        <section id="dynamic-content">
+            <h3>Bem-vindo ao MK-CARDIOSPORT!</h3>
+            <p>Selecione uma seção para começar.</p>
+        </section>
+    </main>
 
-                    <label for="height">Altura (m):</label>
-                    <input type="number" id="height" name="height" step="0.01" required>
-
-                    <label for="imc">IMC (opcional):</label>
-                    <input type="number" id="imc" name="imc" step="0.1" readonly>
-
-                    <label for="tmb">TMB (opcional):</label>
-                    <input type="number" id="tmb" name="tmb" step="0.1" readonly>
-
-                    <label for="bodyComposition">Composição Corporal:</label>
-                    <textarea id="bodyComposition" name="bodyComposition" rows="4"></textarea>
-
-                    <button type="button" onclick="calculateIMC()">Calcular IMC</button>
-                    <button type="submit">Salvar Dados</button>
-                </form>
-            `;
-            break;
-
-        case "gasto-energetico":
-            content.innerHTML = `<h3>Gasto Energético</h3><p>Aqui será a seção para gasto energético.</p>`;
-            break;
-
-        case "macros":
-            content.innerHTML = `<h3>Distribuição de Macros</h3><p>Aqui será a seção para distribuição de macros.</p>`;
-            break;
-
-        case "graficos":
-            content.innerHTML = `<h3>Gráficos</h3><p>Aqui será a seção para gráficos.</p>`;
-            break;
-
-        case "refeicoes":
-            content.innerHTML = `<h3>Refeições</h3><p>Aqui será a seção para planejamento de refeições.</p>`;
-            break;
-
-        case "alternativas":
-            content.innerHTML = `<h3>Alternativas</h3><p>Aqui será a seção para alternativas alimentares.</p>`;
-            break;
-
-        default:
-            content.innerHTML = `<h3>Bem-vindo!</h3><p>Selecione uma seção acima.</p>`;
-    }
-}
-
-// Cálculo de IMC (mesmo código do exemplo anterior)
-function calculateIMC() {
-    const weight = parseFloat(document.getElementById("weight").value);
-    const height = parseFloat(document.getElementById("height").value);
-
-    if (!weight || !height) {
-        alert("Por favor, preencha peso e altura!");
-        return;
-    }
-
-    const imc = (weight / (height * height)).toFixed(1);
-    document.getElementById("imc").value = imc;
-    alert(`IMC calculado: ${imc}`);
-}
-
+    <script src="script.js"></script>
+</body>
+</html>
