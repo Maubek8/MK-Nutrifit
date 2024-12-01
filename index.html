@@ -9,8 +9,9 @@
 </head>
 <body>
     <header class="header">
+        <img src="logo.png" alt="MK Logo" class="logo">
         <h1>MK-CARDIOSPORT</h1>
-        <h2 class="h6">Nutri Fit - Inserir Dados do Paciente</h2>
+        <h2 class="h6">NutriFit PRO - Siga o seu Objetivo!</h2>
     </header>
 
     <div class="container">
@@ -22,6 +23,13 @@
         <div class="form-group">
             <label for="dataPaciente" class="form-label">Data:</label>
             <input type="date" id="dataPaciente" class="form-control">
+        </div>
+
+        <!-- Ferramentas de Edição -->
+        <div class="editor-tools mb-4">
+            <button class="btn btn-secondary" onclick="formatText('bold')">Negrito</button>
+            <button class="btn btn-secondary" onclick="formatText('italic')">Itálico</button>
+            <input type="color" id="colorPicker" onchange="changeColor(this.value)">
         </div>
 
         <!-- Botões para inserir dados -->
@@ -37,11 +45,6 @@
                 <button class="btn btn-outline-primary" onclick="showDay('domingo')">Domingo</button>
             </div>
             <textarea id="cardapioDia" class="form-control" rows="10" placeholder="Insira o cardápio para o dia selecionado..."></textarea>
-            <div class="editor-tools">
-                <button class="btn btn-secondary" onclick="formatText('bold')">Negrito</button>
-                <button class="btn btn-secondary" onclick="formatText('italic')">Itálico</button>
-                <input type="color" id="colorPicker" onchange="changeColor(this.value)">
-            </div>
         </div>
 
         <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#metabolismContent">Metabolismo</button>
