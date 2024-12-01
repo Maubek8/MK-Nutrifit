@@ -1,4 +1,3 @@
-// Inicialização do cardápio por dia
 const cardapios = {
     segunda: "",
     terca: "",
@@ -15,7 +14,7 @@ function showDay(day) {
     document.getElementById('cardapioDia').dataset.currentDay = day;
 }
 
-// Salvar alterações no cardápio
+// Salvar cardápio do dia editado
 document.getElementById('cardapioDia').addEventListener('input', function () {
     const day = this.dataset.currentDay;
     cardapios[day] = this.value;
@@ -30,7 +29,7 @@ function changeColor(color) {
     document.execCommand('foreColor', false, color);
 }
 
-// Abrir/fechar seções ao clicar nos botões
+// Alternar exibição das seções
 document.querySelectorAll('.toggle-button').forEach(button => {
     button.addEventListener('click', () => {
         const target = document.querySelector(button.dataset.target);
@@ -42,7 +41,7 @@ document.querySelectorAll('.toggle-button').forEach(button => {
     });
 });
 
-// Salvar dados e gerar a página do paciente
+// Salvar os dados e criar a página do paciente
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value;
     const dataPaciente = document.getElementById('dataPaciente').value;
@@ -55,13 +54,15 @@ document.getElementById('saveButton').addEventListener('click', () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>${nomePaciente} - Dados</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <header>
-            <h1>${nomePaciente}</h1>
-            <p>Data: ${dataPaciente}</p>
+        <header class="header">
+            <img src="logo.png" alt="MK Logo" class="logo">
+            <h1>MK-CARDIOSPORT</h1>
+            <h2 class="h6">NutriFit PRO - Siga o seu Objetivo!</h2>
         </header>
-        <main>
+        <main class="container">
             <section>
                 <h2>Cardápio</h2>
                 ${Object.entries(cardapios).map(([dia, conteudo]) => `
