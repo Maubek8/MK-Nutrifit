@@ -1,0 +1,32 @@
+:root {
+    --primary: #002f6c;
+    --secondary: #ffc107;
+    --background: #f8f9fa;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background);
+    padding: 1rem;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.accordion-content {
+    display: none;
+    overflow: hidden;
+    padding: 1rem;
+    background: white;
+    border: 1px solid var(--background);
+    margin-top: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
