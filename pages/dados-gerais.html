@@ -45,3 +45,100 @@
     <script src="../script.js"></script>
 </body>
 </html>
+
+/* Formulário */
+.form-container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-container label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.form-container input,
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-container button {
+    display: inline-block;
+    background-color: #ffc107; /* Amarelo */
+    color: #002f6c; /* Azul escuro */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.form-container button:hover {
+    background-color: #ffdb58; /* Amarelo mais claro */
+}
+
+.back-button {
+    display: block;
+    width: 100px;
+    margin: 20px auto;
+    background-color: #002f6c; /* Azul escuro */
+    color: #fff;
+    text-align: center;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #004494; /* Azul mais claro */
+}
+
+// Cálculo de IMC
+function calculateIMC() {
+    const weight = parseFloat(document.getElementById("weight").value);
+    const height = parseFloat(document.getElementById("height").value);
+
+    if (!weight || !height) {
+        alert("Por favor, preencha peso e altura!");
+        return;
+    }
+
+    const imc = (weight / (height * height)).toFixed(1);
+    document.getElementById("imc").value = imc;
+    alert(`IMC calculado: ${imc}`);
+}
+
+// Função para salvar dados (simulado no console)
+document.getElementById("dadosGeraisForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+
+    console.log("Dados Gerais Salvos:", data);
+    alert("Dados salvos com sucesso!");
+
+    // Redirecionar para outra página ou salvar no localStorage/backend
+});
+
+// Função para voltar à página inicial
+function goBack() {
+    window.location.href = "../index.html";
+}
+
