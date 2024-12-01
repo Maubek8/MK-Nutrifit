@@ -10,7 +10,6 @@
             --primary: #002f6c;
             --secondary: #ffc107;
             --background: #f8f9fa;
-            --button-gray: #d6d6d6;
         }
 
         body {
@@ -46,25 +45,19 @@
 
         .btn {
             margin-bottom: 0.5rem;
-        }
-
-        .day-buttons {
-            display: flex;
-            gap: 5px;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-
-        .btn-day {
-            background-color: var(--button-gray);
-            color: black;
-            border: 1px solid var(--button-gray);
-            padding: 5px 10px;
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
             border-radius: 5px;
+            text-align: center;
         }
 
-        .btn-day:hover {
-            background-color: #c6c6c6;
+        .btn:hover {
+            background-color: var(--secondary);
+            color: black;
         }
     </style>
 </head>
@@ -86,36 +79,26 @@
         </div>
 
         <!-- Botões para alternar seções -->
-        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="cardapioSection">Refeições</button>
+        <button class="btn toggle-button" data-target="cardapioSection">Refeições</button>
         <div id="cardapioSection" class="section">
-            <div class="day-buttons">
-                <button class="btn-day" onclick="showDay('segunda')">Segunda</button>
-                <button class="btn-day" onclick="showDay('terca')">Terça</button>
-                <button class="btn-day" onclick="showDay('quarta')">Quarta</button>
-                <button class="btn-day" onclick="showDay('quinta')">Quinta</button>
-                <button class="btn-day" onclick="showDay('sexta')">Sexta</button>
-                <button class="btn-day" onclick="showDay('sabado')">Sábado</button>
-                <button class="btn-day" onclick="showDay('domingo')">Domingo</button>
-            </div>
-            <textarea id="cardapioArea" class="form-control" rows="5" placeholder="Insira o cardápio do dia..."></textarea>
+            <textarea id="cardapioArea" class="form-control" rows="5" placeholder="Insira o cardápio..."></textarea>
         </div>
 
-        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="metabolismSection">Metabolismo</button>
+        <button class="btn toggle-button" data-target="metabolismSection">Metabolismo</button>
         <div id="metabolismSection" class="section">
             <textarea id="metabolismArea" class="form-control" rows="5" placeholder="Informações metabólicas..."></textarea>
         </div>
 
-        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="exerciciosSection">Exercícios</button>
+        <button class="btn toggle-button" data-target="exerciciosSection">Exercícios</button>
         <div id="exerciciosSection" class="section">
             <textarea id="exerciciosArea" class="form-control" rows="5" placeholder="Dados de exercícios..."></textarea>
         </div>
 
-        <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="macrosSection">Macros</button>
+        <button class="btn toggle-button" data-target="macrosSection">Macros</button>
         <div id="macrosSection" class="section">
             <textarea id="macrosArea" class="form-control" rows="5" placeholder="Distribuição de macronutrientes..."></textarea>
         </div>
 
-        <!-- Botão Salvar -->
         <div class="mt-4 text-center">
             <button class="btn btn-success" id="saveButton">Salvar</button>
         </div>
