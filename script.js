@@ -1,61 +1,10 @@
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value.trim() || 'Paciente';
     const dataPaciente = document.getElementById('dataPaciente').value || new Date().toLocaleDateString();
-    const metabolism = document.getElementById('metabolismArea').value;
-    const exercicios = document.getElementById('exerciciosArea').value;
-    const macros = document.getElementById('macrosArea').value;
-    const cardapioDia = document.getElementById('cardapioDia').value;
-
-    const css = `
-        :root {
-            --primary: #002f6c;
-            --secondary: #ffc107;
-            --background: #f8f9fa;
-            --text-color: #333;
-        }
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background);
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            text-align: center;
-            padding: 1rem;
-        }
-        .container {
-            padding: 1rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-        textarea {
-            width: 100%;
-            border-radius: 8px;
-            margin-top: 1rem;
-            padding: 1rem;
-            border: 1px solid #ddd;
-        }
-    `;
-
-    const js = `
-        document.querySelectorAll('.toggle-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const target = document.querySelector(button.dataset.target);
-                const isVisible = target.style.display === 'block';
-                document.querySelectorAll('.accordion-content').forEach(content => {
-                    content.style.display = 'none';
-                });
-                target.style.display = isVisible ? 'none' : 'block';
-            });
-        });
-
-        function applyFormat(command, value = null) {
-            document.execCommand(command, false, value);
-        }
-    `;
+    const metabolism = document.getElementById('metabolismArea').value || 'Nenhuma informação adicionada.';
+    const exercicios = document.getElementById('exerciciosArea').value || 'Nenhuma informação adicionada.';
+    const macros = document.getElementById('macrosArea').value || 'Nenhuma informação adicionada.';
+    const cardapioDia = document.getElementById('cardapioDia').value || 'Nenhuma informação adicionada.';
 
     const html = `
         <!DOCTYPE html>
@@ -64,7 +13,24 @@ document.getElementById('saveButton').addEventListener('click', () => {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${nomePaciente} - Página do Paciente</title>
-            <style>${css}</style>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+            <style>
+                .header {
+                    background: linear-gradient(135deg, #002f6c, #ffc107);
+                    color: white;
+                    text-align: center;
+                    padding: 1rem;
+                }
+                .container {
+                    margin-top: 1rem;
+                }
+                .btn {
+                    margin-bottom: 0.5rem;
+                }
+                .section {
+                    display: none;
+                }
+            </style>
         </head>
         <body>
             <header class="header">
@@ -72,16 +38,30 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 <h2>Data: ${dataPaciente}</h2>
             </header>
             <div class="container">
-                <h3>Cardápio</h3>
-                <p>${cardapioDia}</p>
-                <h3>Metabolismo</h3>
-                <p>${metabolism}</p>
-                <h3>Exercícios</h3>
-                <p>${exercicios}</p>
-                <h3>Macros</h3>
-                <p>${macros}</p>
+                <!-- Botões -->
+                <button class="btn btn-primary w-100" onclick="toggleVisibility('metabolism')">Metabolismo</button>
+                <div id="metabolism" class="section">
+                    <p>${metabolism}</p>
+                </div>
+                <button class="btn btn-primary w-100" onclick="toggleVisibility('refeicoes')">Refeições</button>
+                <div id="refeicoes" class="section">
+                    <p>${cardapioDia}</p>
+                </div>
+                <button class="btn btn-primary w-100" onclick="toggleVisibility('exercicios')">Exercícios</button>
+                <div id="exercicios" class="section">
+                    <p>${exercicios}</p>
+                </div>
+                <button class="btn btn-primary w-100" onclick="toggleVisibility('macros')">Macros</button>
+                <div id="macros" class="section">
+                    <p>${macros}</p>
+                </div>
             </div>
-            <script>${js}</script>
+            <script>
+                function toggleVisibility(id) {
+                    const section = document.getElementById(id);
+                    section.style.display = section.style.display === 'block' ? 'none' : 'block';
+                }
+            </script>
         </body>
         </html>
     `;
@@ -89,6 +69,6 @@ document.getElementById('saveButton').addEventListener('click', () => {
     const blob = new Blob([html], { type: 'text/html' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `${nomePaciente.replace(/\s+/g, '_')}_${dataPaciente}.html`;
+    link.download = `${nomePaciente.replace(/\s+/g, '_')}_pagina.html`;
     link.click();
 });
