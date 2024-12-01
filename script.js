@@ -20,13 +20,30 @@ document.getElementById('cardapioDia').addEventListener('input', function () {
     cardapios[day] = this.value;
 });
 
-// Formatação de texto
-function formatText(command) {
-    document.execCommand(command, false, null);
-}
+// Aplicar formatação de texto
+function applyFormat(command, value = null) {
+    const activeTextarea = document.querySelector('textarea:focus');
+    if (activeTextarea) {
+        const start = activeTextarea.selectionStart;
+        const end = activeTextarea.selectionEnd;
+        const text = activeTextarea.value;
+        const selectedText = text.substring(start, end);
 
-function changeColor(color) {
-    document.execCommand('foreColor', false, color);
+        let formattedText;
+        if (command === 'bold') {
+            formattedText = `**${selectedText}**`;
+        } else if (command === 'italic') {
+            formattedText = `*${selectedText}*`;
+        } else if (command === 'foreColor') {
+            formattedText = `<span style="color:${value};">${selectedText}</span>`;
+        }
+
+        activeTextarea.value =
+            text.substring(0, start) + formattedText + text.substring(end);
+        activeTextarea.setSelectionRange(start, start + formattedText.length);
+    } else {
+        alert('Clique em um campo para aplicar a formatação.');
+    }
 }
 
 // Alternar exibição das seções
