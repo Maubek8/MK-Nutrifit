@@ -27,9 +27,9 @@
 
         <!-- Ferramentas de Edição -->
         <div class="editor-tools mb-4">
-            <button class="btn btn-secondary" onclick="formatText('bold')">Negrito</button>
-            <button class="btn btn-secondary" onclick="formatText('italic')">Itálico</button>
-            <input type="color" id="colorPicker" onchange="changeColor(this.value)">
+            <button class="btn btn-secondary" onclick="applyFormat('bold')">Negrito</button>
+            <button class="btn btn-secondary" onclick="applyFormat('italic')">Itálico</button>
+            <button class="btn btn-secondary" onclick="applyFormat('foreColor', prompt('Digite um código de cor (ex: #ff0000):'))">Cor</button>
         </div>
 
         <!-- Botões para inserir dados -->
@@ -44,22 +44,22 @@
                 <button class="btn btn-outline-primary" onclick="showDay('sabado')">Sábado</button>
                 <button class="btn btn-outline-primary" onclick="showDay('domingo')">Domingo</button>
             </div>
-            <textarea id="cardapioDia" class="form-control" rows="10" placeholder="Insira o cardápio para o dia selecionado..."></textarea>
+            <textarea id="cardapioDia" class="form-control editable" rows="10" placeholder="Insira o cardápio para o dia selecionado..."></textarea>
         </div>
 
         <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#metabolismContent">Metabolismo</button>
         <div id="metabolismContent" class="accordion-content">
-            <textarea id="metabolismArea" class="form-control" rows="5" placeholder="Informações metabólicas do paciente..."></textarea>
+            <textarea id="metabolismArea" class="form-control editable" rows="5" placeholder="Informações metabólicas do paciente..."></textarea>
         </div>
 
         <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#exerciciosContent">Exercícios</button>
         <div id="exerciciosContent" class="accordion-content">
-            <textarea id="exerciciosArea" class="form-control" rows="5" placeholder="Dados de exercícios..."></textarea>
+            <textarea id="exerciciosArea" class="form-control editable" rows="5" placeholder="Dados de exercícios..."></textarea>
         </div>
 
         <button class="btn btn-primary w-100 mb-3 toggle-button" data-target="#macrosContent">Macros</button>
         <div id="macrosContent" class="accordion-content">
-            <textarea id="macrosArea" class="form-control" rows="5" placeholder="Distribuição de macronutrientes..."></textarea>
+            <textarea id="macrosArea" class="form-control editable" rows="5" placeholder="Distribuição de macronutrientes..."></textarea>
         </div>
 
         <!-- Botão Salvar -->
