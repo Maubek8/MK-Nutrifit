@@ -15,14 +15,16 @@
 
     <main>
         <section class="button-container">
-            <button onclick="navigateTo('dados-gerais')">Dados Gerais</button>
-            <button onclick="navigateTo('gasto-energetico')">Gasto Energético</button>
-            <button onclick="navigateTo('macros')">Distribuição de Macros</button>
-            <button onclick="navigateTo('graficos')">Gráficos</button>
-            <button onclick="navigateTo('refeicoes')">Refeições</button>
-            <button onclick="navigateTo('alternativas')">Alternativas</button>
+            <button onclick="loadSection('dados-gerais')">Dados Gerais</button>
+            <button onclick="loadSection('gasto-energetico')">Gasto Energético</button>
+            <button onclick="loadSection('macros')">Distribuição de Macros</button>
+            <button onclick="loadSection('graficos')">Gráficos</button>
+            <button onclick="loadSection('refeicoes')">Refeições</button>
+            <button onclick="loadSection('alternativas')">Alternativas</button>
         </section>
-        <button class="submit-button" onclick="createPatientPage()">Inserir Dados</button>
+
+        <!-- Div para conteúdo dinâmico -->
+        <section id="dynamic-content"></section>
     </main>
 
     <script src="script.js"></script>
