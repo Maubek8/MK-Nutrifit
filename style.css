@@ -2,6 +2,9 @@
     --primary: #002f6c;
     --secondary: #ffc107;
     --background: #f8f9fa;
+    --title-color: #4a90e2;
+    --subtitle-color: #ffc107;
+    --text-background: #ffffff;
 }
 
 body {
@@ -22,7 +25,7 @@ body {
     display: none;
     overflow: hidden;
     padding: 1rem;
-    background: white;
+    background: var(--text-background);
     border: 1px solid var(--background);
     margin-top: 1rem;
     border-radius: 8px;
@@ -35,7 +38,18 @@ textarea {
     border-radius: 8px;
 }
 
+textarea.title {
+    background-color: var(--title-color);
+    color: white;
+    font-weight: bold;
+}
+
+textarea.subtitle {
+    background-color: var(--subtitle-color);
+    color: black;
+    font-weight: bold;
+}
+
 .form-group {
     margin-bottom: 1.5rem;
 }
-
