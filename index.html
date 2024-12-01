@@ -16,15 +16,18 @@
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--background);
+            padding: 1rem;
         }
 
         .header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
-        .expandable-button {
+        .accordion-button {
             background: white;
             border: none;
             padding: 1rem;
@@ -33,107 +36,120 @@
             font-size: 1.2rem;
             transition: background-color 0.3s;
             border-bottom: 1px solid var(--background);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .expandable-button:hover {
+        .accordion-button.active {
             background-color: var(--secondary);
             color: white;
         }
 
-        .content-section {
-            max-height: 0;
+        .accordion-content {
+            display: none;
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
+            padding: 1rem;
             background: white;
-            padding: 0 1rem;
             border-bottom: 1px solid var(--background);
         }
 
-        .content-section.open {
-            max-height: 500px; /* Defina um tamanho suficiente para o conteúdo expandido */
-            padding: 1rem;
+        .accordion-content form {
+            margin-top: 1rem;
+        }
+
+        .accordion-content form .mb-3 {
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div>
-                <h1>MK-CARDIOSPORT</h1>
-                <h2 class="h6">Nutri Fit - Siga o seu objetivo</h2>
-            </div>
-            <div>
-                <button class="btn btn-light btn-sm">Sair</button>
-            </div>
-        </div>
+        <h1>MK-CARDIOSPORT</h1>
+        <h2 class="h6">Nutri Fit - Siga o seu objetivo</h2>
     </header>
 
-    <div class="container mt-4">
-        <button class="expandable-button" onclick="toggleSection('dados-gerais')">Dados Gerais</button>
-        <div id="dados-gerais" class="content-section">
-            <h3>Dados Gerais</h3>
+    <div class="container">
+        <!-- Nome do Paciente -->
+        <div class="mb-4">
+            <label for="patientName" class="form-label">Nome do Paciente:</label>
+            <input type="text" id="patientName" class="form-control" placeholder="Digite o nome do paciente">
+        </div>
+
+        <!-- Acordeão -->
+        <button class="accordion-button">
+            Dados Gerais <span>+</span>
+        </button>
+        <div class="accordion-content">
             <form>
                 <div class="mb-3">
-                    <label>Nome do Paciente</label>
-                    <input type="text" class="form-control">
+                    <label for="weight" class="form-label">Peso (kg)</label>
+                    <input type="number" id="weight" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label>Peso (kg)</label>
-                    <input type="number" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label>Altura (m)</label>
-                    <input type="number" class="form-control">
+                    <label for="height" class="form-label">Altura (m)</label>
+                    <input type="number" id="height" class="form-control">
                 </div>
                 <button class="btn btn-primary">Salvar</button>
             </form>
         </div>
 
-        <button class="expandable-button" onclick="toggleSection('gasto-energetico')">Gasto Energético</button>
-        <div id="gasto-energetico" class="content-section">
-            <h3>Gasto Energético</h3>
+        <button class="accordion-button">
+            Gasto Energético <span>+</span>
+        </button>
+        <div class="accordion-content">
             <p>Insira os dados de atividades físicas e calorias queimadas.</p>
         </div>
 
-        <button class="expandable-button" onclick="toggleSection('macros')">Macros</button>
-        <div id="macros" class="content-section">
-            <h3>Macros</h3>
+        <button class="accordion-button">
+            Macros <span>+</span>
+        </button>
+        <div class="accordion-content">
             <p>Defina a distribuição de macronutrientes.</p>
         </div>
 
-        <button class="expandable-button" onclick="toggleSection('graficos')">Gráficos</button>
-        <div id="graficos" class="content-section">
-            <h3>Gráficos</h3>
+        <button class="accordion-button">
+            Gráficos <span>+</span>
+        </button>
+        <div class="accordion-content">
             <p>Visualize a evolução do paciente em gráficos.</p>
         </div>
 
-        <button class="expandable-button" onclick="toggleSection('refeicoes')">Refeições</button>
-        <div id="refeicoes" class="content-section">
-            <h3>Refeições</h3>
+        <button class="accordion-button">
+            Refeições <span>+</span>
+        </button>
+        <div class="accordion-content">
             <p>Planeje as refeições por dia da semana.</p>
         </div>
 
-        <button class="expandable-button" onclick="toggleSection('alternativas')">Alternativas</button>
-        <div id="alternativas" class="content-section">
-            <h3>Alternativas</h3>
+        <button class="accordion-button">
+            Alternativas <span>+</span>
+        </button>
+        <div class="accordion-content">
             <p>Insira opções de substituição alimentar.</p>
         </div>
     </div>
 
     <script>
-        function toggleSection(id) {
-            const section = document.getElementById(id);
-
-            // Fecha qualquer outra seção aberta
-            document.querySelectorAll('.content-section').forEach(sec => {
-                if (sec !== section && sec.classList.contains('open')) {
-                    sec.classList.remove('open');
+        // Configurações dos botões de acordeão
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const currentlyActive = document.querySelector('.accordion-button.active');
+                if (currentlyActive && currentlyActive !== button) {
+                    currentlyActive.classList.remove('active');
+                    currentlyActive.nextElementSibling.style.display = 'none';
+                    currentlyActive.querySelector('span').textContent = '+';
                 }
-            });
+                
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
 
-            // Abre/fecha a seção clicada
-            section.classList.toggle('open');
-        }
+                // Atualize o símbolo +/- para expandido ou contraído
+                const span = button.querySelector('span');
+                span.textContent = button.classList.contains('active') ? '-' : '+';
+            });
+        });
     </script>
 </body>
 </html>
