@@ -1,3 +1,4 @@
+// Inicialização do cardápio por dia
 const cardapios = {
     segunda: "",
     terca: "",
@@ -8,19 +9,19 @@ const cardapios = {
     domingo: "",
 };
 
-// Mostrar o cardápio do dia selecionado
+// Mostrar cardápio do dia selecionado
 function showDay(day) {
     document.getElementById('cardapioDia').value = cardapios[day] || '';
     document.getElementById('cardapioDia').dataset.currentDay = day;
 }
 
-// Salvar o cardápio do dia editado
+// Salvar alterações no cardápio
 document.getElementById('cardapioDia').addEventListener('input', function () {
     const day = this.dataset.currentDay;
     cardapios[day] = this.value;
 });
 
-// Funções para formatar texto
+// Formatação de texto
 function formatText(command) {
     document.execCommand(command, false, null);
 }
@@ -29,20 +30,19 @@ function changeColor(color) {
     document.execCommand('foreColor', false, color);
 }
 
-// Alternar exibição das seções
-function toggleContent(buttonId, contentId) {
-    document.getElementById(buttonId).addEventListener('click', () => {
-        const content = document.getElementById(contentId);
-        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+// Abrir/fechar seções ao clicar nos botões
+document.querySelectorAll('.toggle-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const target = document.querySelector(button.dataset.target);
+        const isVisible = target.style.display === 'block';
+        document.querySelectorAll('.accordion-content').forEach(content => {
+            content.style.display = 'none';
+        });
+        target.style.display = isVisible ? 'none' : 'block';
     });
-}
+});
 
-toggleContent('cardapioButton', 'cardapioContent');
-toggleContent('metabolismButton', 'metabolismContent');
-toggleContent('exerciciosButton', 'exerciciosContent');
-toggleContent('macrosButton', 'macrosContent');
-
-// Salvar os dados
+// Salvar dados e gerar a página do paciente
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value;
     const dataPaciente = document.getElementById('dataPaciente').value;
