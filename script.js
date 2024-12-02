@@ -45,12 +45,6 @@ document.getElementById('saveButton').addEventListener('click', () => {
     const exercicios = document.getElementById('exerciciosArea').value || 'Nenhuma informação adicionada.';
     const alternativas = document.getElementById('alternativasArea').value || 'Nenhuma informação adicionada.';
 
-    // Gera os botões para os cardápios
-    const refeicoesButtons = Object.entries(cardapios).map(([day, content]) => `
-        <button class="btn-day" onclick="showDay('${day}')">${day.charAt(0).toUpperCase() + day.slice(1)}</button>
-    `).join('');
-
-    // Cria a página do paciente
     const html = `
         <!DOCTYPE html>
         <html lang="en">
@@ -69,7 +63,6 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 .btn-day { padding: 5px 10px; background-color: #ffc107; border: none; border-radius: 5px; cursor: pointer; }
                 .btn-day:hover { background-color: #ffe57f; }
                 .section { display: none; margin-top: 1rem; padding: 1rem; background: white; border: 1px solid #ddd; border-radius: 8px; }
-                .section.active { display: block; }
             </style>
         </head>
         <body>
@@ -78,14 +71,18 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 <h2>Data: ${dataPaciente}</h2>
             </header>
             <div class="container">
+                <!-- Botões de Refeições -->
                 <button class="btn" onclick="toggleVisibility('refeicoesSection')">Refeições</button>
                 <div id="refeicoesSection" class="section">
                     <div class="day-buttons">
-                        ${refeicoesButtons}
+                        ${Object.keys(cardapios).map(day => `
+                            <button class="btn-day" onclick="showDay('${day}')">${day.charAt(0).toUpperCase() + day.slice(1)}</button>
+                        `).join('')}
                     </div>
                     <textarea id="refeicoesContent" rows="5" class="form-control"></textarea>
                 </div>
 
+                <!-- Outras Seções -->
                 <button class="btn" onclick="toggleVisibility('metabolismSection')">Metabolismo</button>
                 <div id="metabolismSection" class="section"><pre>${metabolism}</pre></div>
 
