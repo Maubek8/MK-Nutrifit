@@ -1,13 +1,56 @@
+// Armazena os cardápios por dia da semana
+const cardapios = {
+    segunda: "",
+    terca: "",
+    quarta: "",
+    quinta: "",
+    sexta: "",
+    sabado: "",
+    domingo: "",
+};
+
+// Alternar visibilidade das seções na página principal
+document.querySelectorAll('.toggle-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const targetId = button.dataset.target;
+        const targetSection = document.getElementById(targetId);
+
+        // Exibir somente a seção correspondente
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.display = section === targetSection ? 'block' : 'none';
+        });
+    });
+});
+
+// Exibir cardápio do dia selecionado
+function showDay(day) {
+    const textarea = document.getElementById('cardapioArea');
+    textarea.value = cardapios[day] || '';
+    textarea.dataset.currentDay = day;
+}
+
+// Atualizar o cardápio do dia atual
+document.getElementById('cardapioArea').addEventListener('input', function () {
+    const currentDay = this.dataset.currentDay;
+    if (currentDay) {
+        cardapios[currentDay] = this.value;
+    }
+});
+
+// Salvar a página gerada para o paciente
 document.getElementById('saveButton').addEventListener('click', () => {
     const nomePaciente = document.getElementById('nomePaciente').value.trim() || 'Paciente';
     const dataPaciente = document.getElementById('dataPaciente').value || new Date().toLocaleDateString();
     const metabolism = document.getElementById('metabolismArea').value || 'Nenhuma informação adicionada.';
     const exercicios = document.getElementById('exerciciosArea').value || 'Nenhuma informação adicionada.';
     const alternativas = document.getElementById('alternativasArea').value || 'Nenhuma informação adicionada.';
-    const refeicoes = Object.entries(cardapios).map(([day, content]) => `
+
+    // Gera os botões para os cardápios
+    const refeicoesButtons = Object.entries(cardapios).map(([day, content]) => `
         <button class="btn-day" onclick="showDay('${day}')">${day.charAt(0).toUpperCase() + day.slice(1)}</button>
     `).join('');
 
+    // Cria a página do paciente
     const html = `
         <!DOCTYPE html>
         <html lang="en">
@@ -26,6 +69,7 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 .btn-day { padding: 5px 10px; background-color: #ffc107; border: none; border-radius: 5px; cursor: pointer; }
                 .btn-day:hover { background-color: #ffe57f; }
                 .section { display: none; margin-top: 1rem; padding: 1rem; background: white; border: 1px solid #ddd; border-radius: 8px; }
+                .section.active { display: block; }
             </style>
         </head>
         <body>
@@ -37,7 +81,7 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 <button class="btn" onclick="toggleVisibility('refeicoesSection')">Refeições</button>
                 <div id="refeicoesSection" class="section">
                     <div class="day-buttons">
-                        ${refeicoes}
+                        ${refeicoesButtons}
                     </div>
                     <textarea id="refeicoesContent" rows="5" class="form-control"></textarea>
                 </div>
