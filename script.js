@@ -3,7 +3,10 @@ document.getElementById('saveButton').addEventListener('click', () => {
     const dataPaciente = document.getElementById('dataPaciente').value || new Date().toLocaleDateString();
     const metabolism = document.getElementById('metabolismArea').value || 'Nenhuma informação adicionada.';
     const exercicios = document.getElementById('exerciciosArea').value || 'Nenhuma informação adicionada.';
-    const macros = document.getElementById('macrosArea').value || 'Nenhuma informação adicionada.';
+    const alternativas = document.getElementById('alternativasArea').value || 'Nenhuma informação adicionada.';
+    const refeicoes = Object.entries(cardapios).map(([day, content]) => `
+        <button class="btn-day" onclick="showDay('${day}')">${day.charAt(0).toUpperCase() + day.slice(1)}</button>
+    `).join('');
 
     const html = `
         <!DOCTYPE html>
@@ -12,17 +15,17 @@ document.getElementById('saveButton').addEventListener('click', () => {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${nomePaciente} - Dados</title>
+            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
             <style>
                 body { font-family: 'Roboto', sans-serif; background: #f8f9fa; padding: 1rem; }
                 .header { background: linear-gradient(135deg, #002f6c, #ffc107); color: white; text-align: center; padding: 1rem; }
                 .container { margin: 1rem; padding: 1rem; background: white; border-radius: 8px; }
                 .btn { margin-bottom: 0.5rem; width: 100%; padding: 10px; font-size: 1rem; background-color: #002f6c; color: white; border: none; border-radius: 5px; }
                 .btn:hover { background-color: #ffc107; color: black; }
-                .section { display: none; margin-top: 1rem; padding: 1rem; border: 1px solid #e0e0e0; border-radius: 8px; }
-                pre { white-space: pre-wrap; word-wrap: break-word; font-family: inherit; }
                 .day-buttons { display: flex; justify-content: space-around; margin-bottom: 1rem; }
                 .btn-day { padding: 5px 10px; background-color: #ffc107; border: none; border-radius: 5px; cursor: pointer; }
                 .btn-day:hover { background-color: #ffe57f; }
+                .section { display: none; margin-top: 1rem; padding: 1rem; background: white; border: 1px solid #ddd; border-radius: 8px; }
             </style>
         </head>
         <body>
@@ -31,30 +34,22 @@ document.getElementById('saveButton').addEventListener('click', () => {
                 <h2>Data: ${dataPaciente}</h2>
             </header>
             <div class="container">
-                <!-- Refeições com Botões -->
                 <button class="btn" onclick="toggleVisibility('refeicoesSection')">Refeições</button>
                 <div id="refeicoesSection" class="section">
                     <div class="day-buttons">
-                        <button class="btn-day" onclick="showDay('segunda')">Segunda</button>
-                        <button class="btn-day" onclick="showDay('terca')">Terça</button>
-                        <button class="btn-day" onclick="showDay('quarta')">Quarta</button>
-                        <button class="btn-day" onclick="showDay('quinta')">Quinta</button>
-                        <button class="btn-day" onclick="showDay('sexta')">Sexta</button>
-                        <button class="btn-day" onclick="showDay('sabado')">Sábado</button>
-                        <button class="btn-day" onclick="showDay('domingo')">Domingo</button>
+                        ${refeicoes}
                     </div>
                     <textarea id="refeicoesContent" rows="5" class="form-control"></textarea>
                 </div>
 
-                <!-- Outras Seções -->
-                <button class="btn" onclick="toggleVisibility('metabolism')">Metabolismo</button>
-                <div id="metabolism" class="section"><pre>${metabolism}</pre></div>
+                <button class="btn" onclick="toggleVisibility('metabolismSection')">Metabolismo</button>
+                <div id="metabolismSection" class="section"><pre>${metabolism}</pre></div>
 
-                <button class="btn" onclick="toggleVisibility('exercicios')">Exercícios</button>
-                <div id="exercicios" class="section"><pre>${exercicios}</pre></div>
+                <button class="btn" onclick="toggleVisibility('exerciciosSection')">Exercícios</button>
+                <div id="exerciciosSection" class="section"><pre>${exercicios}</pre></div>
 
-                <button class="btn" onclick="toggleVisibility('macros')">Macros</button>
-                <div id="macros" class="section"><pre>${macros}</pre></div>
+                <button class="btn" onclick="toggleVisibility('alternativasSection')">Alternativas</button>
+                <div id="alternativasSection" class="section"><pre>${alternativas}</pre></div>
             </div>
             <script>
                 function toggleVisibility(id) {
